@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - KaamConnect</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="auth-container">
+        <div class="auth-content">
+            <div class="auth-header">
+                <a href="../index.html" class="logo">
+                    <span class="logo-icon">🔨</span>
+                    <span class="logo-text">KAAMCONNECT</span>
+                </a>
+                <h1 data-translate="loginTitle">Welcome Back</h1>
+                <p data-translate="loginSubtitle">Log in to access your account</p>
+            </div>
+
+            <form class="auth-form" id="loginForm" onsubmit="return handleLogin(event)">
+                <div class="form-group">
+                    <label data-translate="mobileLabel">Mobile Number</label>
+                    <input type="tel" id="mobile" placeholder="Enter your mobile number" required>
+                </div>
+
+                <div class="form-group">
+                    <label data-translate="passwordLabel">Password</label>
+                    <input type="password" id="password" placeholder="Enter your password" required>
+                </div>
+
+                <div class="form-options">
+                    <label class="checkbox-label">
+                        <input type="checkbox">
+                        <span data-translate="rememberMe">Remember me</span>
+                    </label>
+                    <a href="#" class="forgot-link" data-translate="forgotPassword">Forgot Password?</a>
+                </div>
+
+                <button type="submit" class="btn-primary btn-large btn-block" data-translate="loginBtn">Login</button>
+
+                <div class="auth-divider">
+                    <span data-translate="orText">OR</span>
+                </div>
+
+                <button type="button" class="btn-voice-login" onclick="voiceLogin()">
+                    <span class="voice-icon">🎤</span>
+                    <span data-translate="voiceLogin">Login Using Voice</span>
+                </button>
+
+                <p class="auth-footer">
+                    <span data-translate="noAccount">Don't have an account?</span>
+                    <a href="register.html" data-translate="registerLink">Register Now</a>
+                </p>
+            </form>
+        </div>
+
+        <div class="auth-sidebar">
+            <h2 data-translate="sidebarTitle">Join Thousands of Workers</h2>
+            <div class="sidebar-features">
+                <div class="sidebar-feature">
+                    <span class="feature-icon">✅</span>
+                    <span data-translate="sidebarFeature1">AI-powered job matching</span>
+                </div>
+                <div class="sidebar-feature">
+                    <span class="feature-icon">💰</span>
+                    <span data-translate="sidebarFeature2">Secure payments</span>
+                </div>
+                <div class="sidebar-feature">
+                    <span class="feature-icon">🎤</span>
+                    <span data-translate="sidebarFeature3">Voice profile creation</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/translations.js"></script>
+    <script src="../js/auth.js"></script>
+</body>
+</html>

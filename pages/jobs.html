@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find Jobs - KaamConnect</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-content">
+                <a href="../index.html" class="logo">
+                    <span class="logo-icon">🔨</span>
+                    <span class="logo-text">KAAMCONNECT</span>
+                </a>
+                <ul class="nav-links">
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="jobs.html" class="active">Find Jobs</a></li>
+                    <li><a href="post-job.html">Post Job</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="ngo-portal.html">NGO Portal</a></li>
+                </ul>
+                <div class="nav-actions">
+                    <button class="language-toggle" onclick="openLanguageModal()">
+                        <span class="lang-icon">🌐</span>
+                        <span id="currentLang">EN</span>
+                    </button>
+                    <a href="login.html" class="btn-outline">Login</a>
+                    <a href="register.html" class="btn-primary nav-cta">Register</a>
+                </div>
+                <button class="mobile-menu-toggle" aria-label="Toggle menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <div class="page-header">
+        <div class="container">
+            <h1 class="page-title">FIND YOUR NEXT JOB</h1>
+            <p class="page-subtitle">Browse thousands of verified job opportunities</p>
+        </div>
+    </div>
+
+    <!-- Search Section -->
+    <section class="search-section">
+        <div class="container">
+            <div class="search-bar">
+                <input type="text" placeholder="Job title or keyword" id="searchKeyword">
+                <input type="text" placeholder="Location" id="searchLocation">
+                <select id="searchCategory">
+                    <option value="">All Categories</option>
+                    <option value="carpentry">Carpentry</option>
+                    <option value="painting">Painting</option>
+                    <option value="plumbing">Plumbing</option>
+                    <option value="electrical">Electrical</option>
+                    <option value="construction">Construction</option>
+                    <option value="housekeeping">Housekeeping</option>
+                    <option value="gardening">Gardening</option>
+                    <option value="delivery">Delivery</option>
+                </select>
+                <button class="btn-primary" onclick="searchJobs()">Search</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Jobs List -->
+    <section class="job-list-section">
+        <div class="container">
+            <div style="display: grid; grid-template-columns: 250px 1fr; gap: 2rem;">
+                <!-- Filters -->
+                <aside class="filters-sidebar">
+                    <h3 style="font-family: var(--font-display); font-size: 1.5rem; margin-bottom: 1.5rem;">FILTERS</h3>
+                    
+                    <div class="filter-group">
+                        <h4>Job Type</h4>
+                        <div class="filter-option">
+                            <input type="checkbox" id="fulltime">
+                            <label for="fulltime">Full-time</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="parttime">
+                            <label for="parttime">Part-time</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="daily">
+                            <label for="daily">Daily Wage</label>
+                        </div>
+                    </div>
+
+                    <div class="filter-group">
+                        <h4>Salary Range</h4>
+                        <div class="filter-option">
+                            <input type="checkbox" id="salary1">
+                            <label for="salary1">Below ₹500/day</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="salary2">
+                            <label for="salary2">₹500 - ₹1000/day</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="salary3">
+                            <label for="salary3">Above ₹1000/day</label>
+                        </div>
+                    </div>
+                </aside>
+
+                <!-- Job Listings -->
+                <div class="jobs-grid" id="jobsGrid">
+                    <!-- Jobs will be inserted here by JavaScript -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="../js/translations.js"></script>
+    <script src="../js/main.js"></script>
+    <script src="../js/jobs.js"></script>
+</body>
+</html>
