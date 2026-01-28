@@ -1,17 +1,42 @@
-// Main JavaScript for KaamConnect
+// Main Integrated JavaScript - KaamConnect
+// Animations, counter, scroll effects
 
-// Initialize on page load
-document.addEventListener('DOMContentLoaded', () => {
-    initializeNavigation();
-    initializeAnimations();
-    animateStats();
-    initializeMobileMenu();
-    initializeScrollEffects();
-});
+// Counter Animation for Stats
+function animateCounter() {
+    const counters = document.querySelectorAll('.stat-number');
+    
+    counters.forEach(counter => {
+        const target = parseInt(counter.getAttribute('data-target'));
+        const duration = 2000; // 2 seconds
+        const step = target / (duration / 16); // 60fps
+        let current = 0;
+        
+        const updateCounter = () => {
+            current += step;
+            if (current < target) {
+                counter.textContent = Math.floor(current).toLocaleString();
+                requestAnimationFrame(updateCounter);
+            } else {
+                counter.textContent = target.toLocaleString();
+            }
+        };
+        
+        // Start animation when element is in viewport
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    updateCounter();
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+        
+        observer.observe(counter);
+    });
+}
 
-// Navigation
-function initializeNavigation() {
-    // Smooth scroll for anchor links
+// Smooth scroll for anchor links
+function setupSmoothScroll() {
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
             e.preventDefault();
@@ -24,24 +49,10 @@ function initializeNavigation() {
             }
         });
     });
-    
-    // Navbar background change on scroll
-    window.addEventListener('scroll', () => {
-        const navbar = document.querySelector('.navbar');
-        if (navbar) {
-            if (window.scrollY > 100) {
-                navbar.style.background = 'rgba(255, 255, 255, 0.98)';
-                navbar.style.backdropFilter = 'blur(10px)';
-            } else {
-                navbar.style.background = 'var(--white)';
-                navbar.style.backdropFilter = 'none';
-            }
-        }
-    });
 }
 
-// Mobile menu
-function initializeMobileMenu() {
+// Mobile menu toggle (if needed)
+function setupMobileMenu() {
     const menuToggle = document.querySelector('.mobile-menu-toggle');
     const navLinks = document.querySelector('.nav-links');
     
@@ -53,14 +64,9 @@ function initializeMobileMenu() {
     }
 }
 
-// Scroll animations
-function initializeScrollEffects() {
-    const sections = document.querySelectorAll('section');
-    
-    const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -100px 0px'
-    };
+// Intersection Observer for animations
+function setupScrollAnimations() {
+    const animateElements = document.querySelectorAll('.feature-card, .stat-item');
     
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
@@ -69,143 +75,95 @@ function initializeScrollEffects() {
                 entry.target.style.transform = 'translateY(0)';
             }
         });
-    }, observerOptions);
+    }, {
+        threshold: 0.1,
+        rootMargin: '50px'
+    });
     
-    sections.forEach(section => {
-        section.style.opacity = '0';
-        section.style.transform = 'translateY(30px)';
-        section.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
-        observer.observe(section);
+    animateElements.forEach(el => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(20px)';
+        el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        observer.observe(el);
     });
 }
 
-// Animate statistics
-function animateStats() {
-    const stats = document.querySelectorAll('.stat-number');
+// Navbar scroll effect
+function setupNavbarScroll() {
+    const navbar = document.querySelector('.navbar');
+    let lastScroll = 0;
     
-    const observerOptions = {
-        threshold: 0.5
-    };
-    
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const target = parseInt(entry.target.dataset.target);
-                animateCounter(entry.target, target);
-                observer.unobserve(entry.target);
-            }
-        });
-    }, observerOptions);
-    
-    stats.forEach(stat => observer.observe(stat));
-}
-
-function animateCounter(element, target) {
-    let current = 0;
-    const increment = target / 50;
-    const duration = 2000;
-    const stepTime = duration / 50;
-    
-    const timer = setInterval(() => {
-        current += increment;
-        if (current >= target) {
-            element.textContent = target.toLocaleString();
-            clearInterval(timer);
+    window.addEventListener('scroll', () => {
+        const currentScroll = window.pageYOffset;
+        
+        if (currentScroll > 100) {
+            navbar?.classList.add('scrolled');
         } else {
-            element.textContent = Math.floor(current).toLocaleString();
+            navbar?.classList.remove('scrolled');
         }
-    }, stepTime);
+        
+        lastScroll = currentScroll;
+    });
 }
 
-// Initialize animations
-function initializeAnimations() {
-    // Category cards
-    const categoryCards = document.querySelectorAll('.category-card');
-    categoryCards.forEach(card => {
-        card.addEventListener('mouseenter', () => {
-            const icon = card.querySelector('.category-icon');
-            if (icon) {
-                icon.style.transform = 'scale(1.2) rotate(10deg)';
-            }
+// Update placeholder translation
+function updatePlaceholderTranslations() {
+    const elements = document.querySelectorAll('[data-translate-placeholder]');
+    elements.forEach(element => {
+        const key = element.getAttribute('data-translate-placeholder');
+        if (window.translations && window.translations[window.currentLanguage] && window.translations[window.currentLanguage][key]) {
+            element.placeholder = window.translations[window.currentLanguage][key];
+        }
+    });
+}
+
+// Auto-resize textareas
+function setupAutoResizeTextareas() {
+    document.querySelectorAll('textarea').forEach(textarea => {
+        textarea.addEventListener('input', function() {
+            this.style.height = 'auto';
+            this.style.height = Math.min(this.scrollHeight, 200) + 'px';
         });
-        
-        card.addEventListener('mouseleave', () => {
-            const icon = card.querySelector('.category-icon');
-            if (icon) {
-                icon.style.transform = 'scale(1) rotate(0deg)';
-            }
-        });
+    });
+}
+
+// Initialize all functions
+document.addEventListener('DOMContentLoaded', () => {
+    // Run animations
+    animateCounter();
+    setupSmoothScroll();
+    setupMobileMenu();
+    setupScrollAnimations();
+    setupNavbarScroll();
+    setupAutoResizeTextareas();
+    
+    // Update translations on language change
+    window.addEventListener('languagechange', () => {
+        updatePlaceholderTranslations();
     });
     
-    // Feature cards
-    const featureCards = document.querySelectorAll('.feature-card-main');
-    featureCards.forEach(card => {
-        card.addEventListener('mouseenter', () => {
-            card.style.transform = 'translateX(10px)';
-        });
-        
-        card.addEventListener('mouseleave', () => {
-            card.style.transform = 'translateX(0)';
-        });
-    });
+    // Initial translation update
+    updatePlaceholderTranslations();
     
-    // Workflow cards
-    const workflowCards = document.querySelectorAll('.workflow-card');
-    workflowCards.forEach(card => {
-        card.addEventListener('mouseenter', () => {
-            card.style.transform = 'translateY(-8px)';
-            card.style.boxShadow = 'var(--shadow-lg)';
-        });
-        
-        card.addEventListener('mouseleave', () => {
-            card.style.transform = 'translateY(0)';
-            card.style.boxShadow = 'var(--shadow-sm)';
-        });
-    });
-}
+    console.log('✅ KaamConnect initialized successfully');
+});
 
-// Voice profile starter
-function startVoiceProfile() {
-    // In a real implementation, this would start voice recognition
-    alert('Voice Profile Feature\n\nThis feature would use speech-to-text technology to help you create your profile using voice commands. You would be prompted to speak your:\n- Name\n- Skills\n- Location\n- Experience\n- Availability\n\nThe system would convert your speech to text and create your profile automatically.');
-    window.location.href = 'pages/voice-profile.html';
-}
-
-// Add mobile menu styles dynamically
-const style = document.createElement('style');
-style.textContent = `
-    @media (min-width: 969px) {
-        .nav-links.active {
-            display: flex;
+// Keyboard accessibility
+document.addEventListener('keydown', (e) => {
+    // Close modals on Escape
+    if (e.key === 'Escape') {
+        if (window.closeLanguageModal) {
+            window.closeLanguageModal();
+        }
+        if (window.chatbot && window.chatbot.isOpen) {
+            window.chatbot.closePanel();
         }
     }
-    
-    @media (max-width: 968px) {
-        .nav-links.active {
-            display: flex;
-            flex-direction: column;
-            position: absolute;
-            top: 100%;
-            left: 0;
-            right: 0;
-            background: var(--white);
-            padding: 2rem;
-            box-shadow: var(--shadow-lg);
-            gap: 1.5rem;
-            z-index: 999;
-        }
-        
-        .mobile-menu-toggle.active span:nth-child(1) {
-            transform: rotate(45deg) translate(5px, 5px);
-        }
-        
-        .mobile-menu-toggle.active span:nth-child(2) {
-            opacity: 0;
-        }
-        
-        .mobile-menu-toggle.active span:nth-child(3) {
-            transform: rotate(-45deg) translate(7px, -6px);
-        }
-    }
-`;
-document.head.appendChild(style);
+});
+
+// Export for global access
+window.kaamConnect = {
+    animateCounter,
+    setupSmoothScroll,
+    setupScrollAnimations
+};
