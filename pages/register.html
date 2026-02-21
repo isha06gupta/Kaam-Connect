@@ -1,112 +1,125 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register - KaamConnect</title>
+
     <link rel="stylesheet" href="../css/style.css">
+
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
+
 <body>
-    <div class="auth-container">
-        <div class="auth-content">
-            <div class="auth-header">
-                <a href="../index.html" class="logo">
-                    <span class="logo-icon">🔨</span>
-                    <span class="logo-text">KAAMCONNECT</span>
-                </a>
-                <h1>Create Account</h1>
-                <p>Join thousands of workers and employers</p>
-            </div>
 
-            <div class="user-type-selector" style="margin-bottom: 2rem;">
-                <button class="type-btn active" onclick="selectUserType('worker')" id="workerBtn">
-                    I'm a Worker
-                </button>
-                <button class="type-btn" onclick="selectUserType('employer')" id="employerBtn">
-                    I'm an Employer
-                </button>
-            </div>
+<div class="auth-container">
 
-            <form class="auth-form" id="registerForm" onsubmit="return handleRegister(event)">
-                <div class="form-group">
-                    <label>Full Name</label>
-                    <input type="text" id="fullname" placeholder="Enter your full name" required>
-                </div>
+    <div class="auth-content">
 
-                <div class="form-group">
-                    <label>Mobile Number</label>
-                    <input type="tel" id="mobile" placeholder="Enter your mobile number" required>
-                </div>
+        <div class="auth-header">
+            <a href="../index.html" class="logo">
+                <span class="logo-icon">🔨</span>
+                <span class="logo-text">KAAMCONNECT</span>
+            </a>
 
-                <div class="form-group">
-                    <label>Password</label>
-                    <input type="password" id="password" placeholder="Create a password" required>
-                </div>
-
-                <div class="form-group" id="workerFields">
-                    <label>Primary Skill</label>
-                    <select id="skill" required>
-                        <option value="">Select your skill</option>
-                        <option value="carpentry">Carpentry</option>
-                        <option value="painting">Painting</option>
-                        <option value="plumbing">Plumbing</option>
-                        <option value="electrical">Electrical Work</option>
-                        <option value="construction">Construction</option>
-                        <option value="housekeeping">Housekeeping</option>
-                        <option value="gardening">Gardening</option>
-                        <option value="delivery">Delivery</option>
-                    </select>
-                </div>
-
-                <div class="form-group" id="employerFields" style="display: none;">
-                    <label>Company Name</label>
-                    <input type="text" id="company" placeholder="Enter company name">
-                </div>
-
-                <div class="form-group">
-                    <label>Location</label>
-                    <input type="text" id="location" placeholder="Enter your city" required>
-                </div>
-
-                <button type="submit" class="btn-primary btn-large btn-block">Register</button>
-
-                <div class="auth-divider">
-                    <span>OR</span>
-                </div>
-
-                <a href="voice-profile.html" class="btn-voice-login" style="text-decoration: none; text-align: center;">
-                    <span class="voice-icon">🎤</span>
-                    <span>Create Profile Using Voice</span>
-                </a>
-
-                <p class="auth-footer">
-                    <span>Already have an account?</span>
-                    <a href="login.html">Login Here</a>
-                </p>
-            </form>
+            <h1>Create Account</h1>
+            <p>Join thousands of workers and employers</p>
         </div>
 
-        <div class="auth-sidebar">
-            <h2>Start Your Journey</h2>
-            <div class="sidebar-features">
-                <div class="sidebar-feature">
-                    <span class="feature-icon">✅</span>
-                    <span>Quick 2-minute registration</span>
-                </div>
-                <div class="sidebar-feature">
-                    <span class="feature-icon">🤖</span>
-                    <span>AI finds jobs for you</span>
-                </div>
-                <div class="sidebar-feature">
-                    <span class="feature-icon">🔒</span>
-                    <span>Safe and verified platform</span>
-                </div>
-            </div>
+        <!-- USER TYPE -->
+        <div class="user-type-selector">
+            <button type="button" class="type-btn active">I'm a Worker</button>
+            <button type="button" class="type-btn">I'm an Employer</button>
         </div>
+
+        <!-- REGISTER FORM -->
+        <form class="auth-form" id="registerForm">
+
+            <div class="form-group">
+                <label for="fullname">Full Name</label>
+                <input type="text"
+                       id="fullname"
+                       name="fullname"
+                       placeholder="Enter full name"
+                       required>
+            </div>
+
+            <div class="form-group">
+                <label for="mobile">Mobile Number</label>
+                <input type="tel"
+                       id="mobile"
+                       name="mobile"
+                       placeholder="Enter mobile number"
+                       required>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password"
+                       id="password"
+                       name="password"
+                       placeholder="Create password"
+                       required>
+            </div>
+
+            <div class="form-group">
+                <label for="skill">Primary Skill</label>
+                <select id="skill" name="skill" title="Primary Skill" required>
+                    <option value="">Select Skill</option>
+                    <option value="carpentry">Carpentry</option>
+                    <option value="painting">Painting</option>
+                    <option value="plumbing">Plumbing</option>
+                    <option value="electrical">Electrical Work</option>
+                    <option value="construction">Construction</option>
+                    <option value="housekeeping">Housekeeping</option>
+                    <option value="gardening">Gardening</option>
+                    <option value="delivery">Delivery</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="company">Company Name (Optional)</label>
+                <input type="text"
+                       id="company"
+                       name="company"
+                       placeholder="Company name">
+            </div>
+
+            <div class="form-group">
+                <label for="location">Location</label>
+                <input type="text"
+                       id="location"
+                       name="location"
+                       placeholder="Enter location"
+                       required>
+            </div>
+
+            <button type="submit" class="btn-primary btn-large btn-block">
+                Register
+            </button>
+
+            <div class="auth-divider">
+                <span>OR</span>
+            </div>
+
+            <a href="voice-profile.html" class="btn-voice-login">
+                🎤 Create Profile Using Voice
+            </a>
+
+            <p class="auth-footer">
+                Already have an account?
+                <a href="login.html">Login Here</a>
+            </p>
+
+        </form>
+
     </div>
 
-    <script src="../js/translations.js"></script>
-    <script src="../js/auth.js"></script>
+</div>
+
+<script src="../js/translations.js"></script>
+<script src="../js/auth.js"></script>
+
 </body>
 </html>
