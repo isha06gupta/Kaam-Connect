@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NGO Portal - KaamConnect</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-content">
+                <a href="../index.html" class="logo">
+                    <span class="logo-icon">🔨</span>
+                    <span class="logo-text">KAAMCONNECT</span>
+                </a>
+                <ul class="nav-links">
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="jobs.html">Find Jobs</a></li>
+                    <li><a href="post-job.html">Post Job</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="ngo-portal.html" class="active">NGO Portal</a></li>
+                </ul>
+                <div class="nav-actions">
+                    <button class="language-toggle" onclick="openLanguageModal()">
+                        <span class="lang-icon">🌐</span>
+                        <span id="currentLang">EN</span>
+                    </button>
+                    <a href="login.html" class="btn-outline">Login</a>
+                    <a href="register.html" class="btn-primary nav-cta">Register</a>
+                </div>
+                <button class="mobile-menu-toggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <div class="page-header">
+        <div class="container">
+            <h1 class="page-title">NGO PARTNER PORTAL</h1>
+            <p class="page-subtitle">Empowering communities through verified employment</p>
+        </div>
+    </div>
+
+    <!-- NGO Portal Content -->
+    <section style="padding: 4rem 0;">
+        <div class="container">
+            <div class="dashboard-container" style="margin-top: 0;">
+                <div class="dashboard-grid">
+                    <div class="dashboard-card">
+                        <div class="card-icon">👥</div>
+                        <div class="card-value">1,247</div>
+                        <div class="card-label">Workers Verified</div>
+                    </div>
+                    <div class="dashboard-card">
+                        <div class="card-icon">🏢</div>
+                        <div class="card-value">385</div>
+                        <div class="card-label">Employers Verified</div>
+                    </div>
+                    <div class="dashboard-card">
+                        <div class="card-icon">✅</div>
+                        <div class="card-value">52</div>
+                        <div class="card-label">Pending Verifications</div>
+                    </div>
+                    <div class="dashboard-card">
+                        <div class="card-icon">💼</div>
+                        <div class="card-value">3,421</div>
+                        <div class="card-label">Successful Placements</div>
+                    </div>
+                </div>
+
+                <div style="margin-top: 3rem; background: white; padding: 3rem; border-radius: 12px; box-shadow: var(--shadow-sm);">
+                    <h2 style="font-family: var(--font-display); font-size: 2.5rem; margin-bottom: 2rem;">PARTNER WITH US</h2>
+                    <p style="font-size: 1.1rem; line-height: 1.8; color: var(--gray-700); margin-bottom: 2rem;">
+                        KaamConnect partners with NGOs and government organizations to verify workers and employers, 
+                        ensuring a safe and trustworthy platform for all users. Our verification process helps build 
+                        trust and creates better employment opportunities for underserved communities.
+                    </p>
+                    
+                    <h3 style="font-family: var(--font-display); font-size: 1.8rem; margin: 2rem 0 1rem;">BENEFITS OF PARTNERSHIP</h3>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+                        <div style="padding: 1.5rem; background: var(--gray-100); border-radius: 8px;">
+                            <h4 style="font-weight: 700; margin-bottom: 0.5rem;">🎯 Direct Impact</h4>
+                            <p style="color: var(--gray-700);">Help connect workers directly with legitimate employment opportunities</p>
+                        </div>
+                        <div style="padding: 1.5rem; background: var(--gray-100); border-radius: 8px;">
+                            <h4 style="font-weight: 700; margin-bottom: 0.5rem;">📊 Real-time Dashboard</h4>
+                            <p style="color: var(--gray-700);">Track verification statistics and placement success rates</p>
+                        </div>
+                        <div style="padding: 1.5rem; background: var(--gray-100); border-radius: 8px;">
+                            <h4 style="font-weight: 700; margin-bottom: 0.5rem;">🤝 Community Building</h4>
+                            <p style="color: var(--gray-700);">Strengthen your community outreach and support programs</p>
+                        </div>
+                    </div>
+
+                    <div style="text-align: center; margin-top: 3rem;">
+                        <button class="btn-large btn-primary">Become a Partner NGO</button>
+                        <button class="btn-large btn-outline" style="margin-left: 1rem;">NGO Login</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="../js/translations.js"></script>
+    <script src="../js/main.js"></script>
+</body>
+</html>

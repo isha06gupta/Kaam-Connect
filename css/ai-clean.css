@@ -1,0 +1,597 @@
+/* AI Assistant Page - Clean Design */
+/* Based on uploaded screenshots with India map texture */
+
+/* Navigation */
+.navbar {
+    background: var(--bg-primary);
+    border-bottom: 1px solid var(--border-light);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    transition: all 0.3s ease;
+}
+
+.nav-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 72px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    text-decoration: none;
+    font-weight: 800;
+    font-size: 1.125rem;
+    letter-spacing: 0.5px;
+    color: var(--text-primary);
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+    gap: 2rem;
+    align-items: center;
+}
+
+.nav-links a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9375rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: color 0.2s ease;
+    position: relative;
+}
+
+.nav-links a:hover {
+    color: var(--orange);
+}
+
+.nav-links a.active {
+    color: var(--orange);
+}
+
+.nav-links a.active::after {
+    content: '';
+    position: absolute;
+    bottom: -1.5rem;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--orange);
+}
+
+.nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.icon-btn,
+.lang-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-light);
+    color: var(--text-secondary);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    position: relative;
+}
+
+.lang-btn {
+    width: auto;
+    padding: 0 0.875rem;
+    gap: 0.5rem;
+}
+
+.icon-btn:hover,
+.lang-btn:hover {
+    background: var(--bg-tertiary);
+    border-color: var(--orange);
+    color: var(--orange);
+}
+
+/* Theme Toggle Icons */
+.sun-icon,
+.moon-icon {
+    position: absolute;
+    transition: all 0.3s ease;
+}
+
+[data-theme="light"] .moon-icon,
+[data-theme="dark"] .sun-icon {
+    opacity: 0;
+    transform: scale(0) rotate(180deg);
+}
+
+[data-theme="light"] .sun-icon,
+[data-theme="dark"] .moon-icon {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+}
+
+.btn-register {
+    padding: 0.75rem 1.75rem;
+    background: var(--orange);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 0.875rem;
+    letter-spacing: 0.5px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 12px rgba(255, 107, 53, 0.25);
+}
+
+.btn-register:hover {
+    background: var(--orange-dark);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(255, 107, 53, 0.35);
+}
+
+/* Hero Section with India Map Texture */
+.hero-section {
+    background: var(--bg-tertiary);
+    padding: 4rem 0;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    border-bottom: 1px solid var(--border-light);
+}
+
+.india-map-texture {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 800px;
+    height: 600px;
+    opacity: 0.025;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600"><path fill="%23FF6B35" d="M400,50 L420,80 L440,90 L460,120 L470,150 L480,180 L485,220 L485,260 L480,300 L470,340 L450,380 L430,410 L410,430 L390,440 L370,445 L350,440 L330,430 L310,410 L290,380 L270,340 L260,300 L255,260 L255,220 L260,180 L270,150 L280,120 L300,90 L320,80 L340,60 L360,50 L380,50 Z M400,100 L415,115 L425,140 L430,170 L432,200 L430,230 L425,260 L415,290 L400,310 L385,290 L375,260 L370,230 L368,200 L370,170 L375,140 L385,115 Z"/><circle fill="%23FF6B35" cx="320" cy="200" r="8"/><circle fill="%23FF6B35" cx="480" cy="200" r="8"/><circle fill="%23FF6B35" cx="400" cy="400" r="12"/></svg>');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    pointer-events: none;
+}
+
+[data-theme="dark"] .india-map-texture {
+    opacity: 0.04;
+    filter: brightness(1.5);
+}
+
+.hero-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    position: relative;
+    z-index: 1;
+}
+
+.hero-section h1 {
+    font-size: clamp(2.5rem, 6vw, 4rem);
+    font-weight: 900;
+    letter-spacing: 1px;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+}
+
+.hero-section p {
+    font-size: 1.125rem;
+    color: var(--text-secondary);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* Main Layout */
+.main-layout {
+    padding: 2.5rem 0;
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    gap: 2.5rem;
+    align-items: start;
+}
+
+/* Chat Panel */
+.chat-panel {
+    background: var(--bg-primary);
+    border: 1px solid var(--border-light);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+}
+
+.chat-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.5rem;
+    border-bottom: 1px solid var(--border-light);
+    background: var(--bg-secondary);
+}
+
+.chat-header-left {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.ai-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    background: var(--orange);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    flex-shrink: 0;
+}
+
+.chat-header h2 {
+    font-size: 1.125rem;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    color: var(--text-primary);
+}
+
+.voice-mode-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    padding: 0.625rem 1.25rem;
+    background: var(--bg-primary);
+    border: 1px solid var(--border-light);
+    border-radius: 10px;
+    color: var(--text-secondary);
+    font-weight: 600;
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.voice-mode-btn:hover {
+    background: var(--bg-tertiary);
+    border-color: var(--orange);
+    color: var(--orange);
+}
+
+/* Messages Area */
+.chat-messages {
+    padding: 1.5rem;
+    min-height: 500px;
+    max-height: 600px;
+    overflow-y: auto;
+    background: var(--bg-secondary);
+}
+
+.message {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    animation: slideUp 0.3s ease-out;
+}
+
+.message-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    background: var(--orange);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    flex-shrink: 0;
+}
+
+.message-bubble {
+    flex: 1;
+    padding: 1rem 1.25rem;
+    background: var(--bg-primary);
+    border: 1px solid var(--border-light);
+    border-radius: 12px;
+    border-bottom-left-radius: 4px;
+    line-height: 1.7;
+    color: var(--text-primary);
+}
+
+.message-bubble strong {
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.message-bubble p {
+    margin: 0.5rem 0;
+}
+
+.message-bubble ul {
+    margin: 0.75rem 0;
+    padding-left: 1.5rem;
+}
+
+.message-bubble li {
+    margin: 0.5rem 0;
+    color: var(--text-secondary);
+}
+
+/* User Messages */
+.user-message .message-avatar {
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border-light);
+    color: var(--text-secondary);
+}
+
+.user-message .message-bubble {
+    background: var(--orange);
+    border-color: var(--orange);
+    color: white;
+    border-bottom-right-radius: 4px;
+    border-bottom-left-radius: 12px;
+}
+
+.user-message .message-bubble strong,
+.user-message .message-bubble p,
+.user-message .message-bubble li {
+    color: white;
+}
+
+/* Input Area */
+.chat-input-wrapper {
+    padding: 1.5rem;
+    background: var(--bg-primary);
+    border-top: 1px solid var(--border-light);
+}
+
+.chat-input-wrapper textarea {
+    width: 100%;
+    min-height: 48px;
+    max-height: 120px;
+    padding: 0.875rem 1rem;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-light);
+    border-radius: 12px;
+    color: var(--text-primary);
+    font-family: inherit;
+    font-size: 0.9375rem;
+    resize: none;
+    transition: all 0.2s ease;
+}
+
+.chat-input-wrapper textarea:focus {
+    outline: none;
+    border-color: var(--orange);
+    box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.1);
+}
+
+.chat-input-wrapper textarea::placeholder {
+    color: var(--text-tertiary);
+}
+
+.input-actions {
+    display: flex;
+    gap: 0.625rem;
+    margin-top: 0.75rem;
+    justify-content: flex-end;
+}
+
+.voice-btn,
+.send-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.voice-btn {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-light);
+    color: var(--text-secondary);
+}
+
+.voice-btn:hover {
+    background: var(--bg-tertiary);
+    border-color: var(--orange);
+    color: var(--orange);
+}
+
+.send-btn {
+    background: var(--orange);
+    color: white;
+    box-shadow: 0 4px 12px rgba(255, 107, 53, 0.25);
+}
+
+.send-btn:hover {
+    background: var(--orange-dark);
+    transform: scale(1.05);
+}
+
+/* Recommendations Panel */
+.recommendations-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.panel-section {
+    background: var(--bg-primary);
+    border: 1px solid var(--border-light);
+    border-radius: 16px;
+    padding: 1.5rem;
+    box-shadow: var(--shadow-md);
+}
+
+.panel-title {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    font-size: 1rem;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    margin-bottom: 1.25rem;
+    color: var(--text-primary);
+}
+
+.panel-title svg {
+    color: var(--orange);
+    flex-shrink: 0;
+}
+
+/* Job Cards */
+.job-card {
+    padding: 1.25rem;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-light);
+    border-radius: 12px;
+    margin-bottom: 1rem;
+    position: relative;
+    transition: all 0.2s ease;
+}
+
+.job-card:hover {
+    border-color: var(--orange);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.job-card h4 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 0.75rem;
+    padding-right: 4rem;
+}
+
+.job-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
+}
+
+.job-info span {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+}
+
+.job-info svg {
+    flex-shrink: 0;
+}
+
+.match-badge {
+    position: absolute;
+    top: 1.25rem;
+    right: 1.25rem;
+    padding: 0.375rem 0.875rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.match-badge.high {
+    background: rgba(16, 185, 129, 0.15);
+    color: var(--success);
+}
+
+.match-badge.medium {
+    background: rgba(245, 158, 11, 0.15);
+    color: var(--warning);
+}
+
+/* Quick Action Buttons */
+.quick-btn {
+    width: 100%;
+    padding: 0.875rem;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-light);
+    border-radius: 10px;
+    color: var(--text-primary);
+    font-weight: 600;
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-bottom: 0.75rem;
+}
+
+.quick-btn:hover {
+    background: var(--bg-tertiary);
+    border-color: var(--orange);
+    color: var(--orange);
+    transform: translateX(4px);
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .container {
+        grid-template-columns: 1fr;
+    }
+    
+    .recommendations-panel {
+        order: -1;
+    }
+}
+
+@media (max-width: 768px) {
+    .nav-container {
+        padding: 0 1rem;
+    }
+    
+    .nav-links {
+        display: none;
+    }
+    
+    .hero-section {
+        padding: 3rem 0;
+    }
+    
+    .main-layout {
+        padding: 1.5rem 0;
+    }
+    
+    .container {
+        padding: 0 1rem;
+        gap: 1.5rem;
+    }
+    
+    .chat-messages {
+        min-height: 400px;
+        max-height: 500px;
+    }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}

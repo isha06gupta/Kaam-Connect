@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voice Profile - KaamConnect</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div style="min-height: 100vh; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+        <div style="max-width: 600px; background: white; padding: 3rem; border-radius: 12px; text-align: center;">
+            <div class="logo" style="justify-content: center; margin-bottom: 2rem;">
+                <span class="logo-icon">🔨</span>
+                <span class="logo-text">KAAMCONNECT</span>
+            </div>
+            
+            <h1 style="font-family: var(--font-display); font-size: 3rem; margin-bottom: 1rem;">VOICE PROFILE</h1>
+            <p style="color: var(--gray-700); margin-bottom: 3rem; font-size: 1.1rem;">Create your profile using voice - no typing needed!</p>
+            
+            <div id="voiceStatus" style="margin-bottom: 2rem;">
+                <div style="font-size: 6rem; margin-bottom: 1rem;">🎤</div>
+                <p style="font-size: 1.2rem; color: var(--secondary);">Click the microphone to start</p>
+            </div>
+            
+            <button onclick="startVoiceRecording()" class="btn-large btn-primary" style="margin-bottom: 1rem;">
+                Start Recording
+            </button>
+            
+            <div id="voiceInstructions" style="background: var(--gray-100); padding: 2rem; border-radius: 8px; margin-top: 2rem; text-align: left;">
+                <h3 style="font-family: var(--font-display); font-size: 1.5rem; margin-bottom: 1rem;">INSTRUCTIONS</h3>
+                <ol style="color: var(--gray-700); line-height: 1.8;">
+                    <li>Click "Start Recording" button</li>
+                    <li>Speak clearly in your language</li>
+                    <li>Answer each question one by one:
+                        <ul style="margin-top: 0.5rem;">
+                            <li>What is your name?</li>
+                            <li>What work do you do?</li>
+                            <li>Where do you live?</li>
+                            <li>How many years of experience?</li>
+                            <li>When are you available?</li>
+                        </ul>
+                    </li>
+                    <li>Review your profile</li>
+                    <li>Submit and start receiving job offers!</li>
+                </ol>
+            </div>
+            
+            <p style="margin-top: 2rem;">
+                <a href="register.html" style="color: var(--primary); text-decoration: none; font-weight: 600;">← Back to Registration</a>
+            </p>
+        </div>
+    </div>
+
+    <script src="../js/voice-profile.js"></script>
+</body>
+</html>

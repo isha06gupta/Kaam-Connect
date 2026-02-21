@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KaamConnect - AI-Enabled Job Platform for Daily Wage Workers</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Language Selector Modal -->
+    <div id="languageModal" class="language-modal">
+        <div class="language-modal-content">
+            <span class="close-modal" onclick="closeLanguageModal()">&times;</span>
+            <h2 data-translate="selectLanguage">Select Your Language / अपनी भाषा चुनें</h2>
+            <div class="language-options">
+                <button class="language-btn" onclick="changeLanguage('en')">
+                    <span class="lang-flag">🇬🇧</span>
+                    <span>English</span>
+                </button>
+                <button class="language-btn" onclick="changeLanguage('hi')">
+                    <span class="lang-flag">🇮🇳</span>
+                    <span>हिंदी (Hindi)</span>
+                </button>
+                <button class="language-btn" onclick="changeLanguage('bn')">
+                    <span class="lang-flag">🇮🇳</span>
+                    <span>বাংলা (Bengali)</span>
+                </button>
+                <button class="language-btn" onclick="changeLanguage('te')">
+                    <span class="lang-flag">🇮🇳</span>
+                    <span>తెలుగు (Telugu)</span>
+                </button>
+                <button class="language-btn" onclick="changeLanguage('ta')">
+                    <span class="lang-flag">🇮🇳</span>
+                    <span>தமிழ் (Tamil)</span>
+                </button>
+                <button class="language-btn" onclick="changeLanguage('mr')">
+                    <span class="lang-flag">🇮🇳</span>
+                    <span>मराठी (Marathi)</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-content">
+                <div class="logo">
+                    <span class="logo-icon">🔨</span>
+                    <span class="logo-text">KAAMCONNECT</span>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="index.html" class="active" data-translate="navHome">Home</a></li>
+                    <li><a href="pages/jobs.html" data-translate="navJobs">Find Jobs</a></li>
+                    <li><a href="pages/post-job.html" data-translate="navPostJob">Post Job</a></li>
+                    <li><a href="pages/about.html" data-translate="navAbout">About</a></li>
+                    <li><a href="pages/ngo-portal.html" data-translate="navNGO">NGO Portal</a></li>
+                </ul>
+                <div class="nav-actions">
+                    <button class="language-toggle" onclick="openLanguageModal()">
+                        <span class="lang-icon">🌐</span>
+                        <span id="currentLang">EN</span>
+                    </button>
+                    <a href="pages/login.html" class="btn-outline" data-translate="navLogin">Login</a>
+                    <a href="pages/register.html" class="btn-primary nav-cta" data-translate="navRegister">Register</a>
+                </div>
+                <button class="mobile-menu-toggle" aria-label="Toggle menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-background"></div>
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-badge" data-translate="heroBadge">AI-POWERED MATCHING</div>
+                <h1 class="hero-title">
+                    <span class="title-line" data-translate="heroLine1">CONNECTING</span>
+                    <span class="title-line highlight" data-translate="heroLine2">DAILY WORKERS</span>
+                    <span class="title-line" data-translate="heroLine3">WITH OPPORTUNITIES</span>
+                </h1>
+                <p class="hero-subtitle" data-translate="heroSubtitle">
+                    An AI-enabled platform designed for daily wage and semi-skilled workers. 
+                    Find work in carpentry, painting, housekeeping, construction, and more. 
+                    Verified employers. Secure payments. NGO monitored.
+                </p>
+                <div class="hero-cta">
+                    <a href="pages/register.html?type=worker" class="btn-large btn-primary" data-translate="heroWorkerBtn">
+                        I'm Looking for Work
+                    </a>
+                    <a href="pages/register.html?type=employer" class="btn-large btn-secondary" data-translate="heroEmployerBtn">
+                        I'm Hiring Workers
+                    </a>
+                </div>
+
+                <!-- Voice Profile Creation CTA -->
+                <div class="voice-cta">
+                    <p data-translate="voiceCTA">Can't read? Create your profile using voice! Click here to start.</p>
+                    <a href="pages/voice-profile.html" class="btn-voice" data-translate="voiceBtn">Start Voice Profile</a>
+                </div>
+
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <div class="stat-number" data-target="15420">0</div>
+                        <div class="stat-label" data-translate="statJobs">Active Jobs</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number" data-target="3240">0</div>
+                        <div class="stat-label" data-translate="statWorkers">Registered Workers</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number" data-target="1150">0</div>
+                        <div class="stat-label" data-translate="statEmployers">Verified Employers</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number" data-target="45">0</div>
+                        <div class="stat-label" data-translate="statNGOs">Partner NGOs</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="how-it-works">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title" data-translate="howItWorksTitle">HOW KAAMCONNECT WORKS</h2>
+                <p class="section-subtitle" data-translate="howItWorksSubtitle">Simple steps to find work or hire workers</p>
+            </div>
+
+            <!-- For Workers -->
+            <div class="workflow-section">
+                <h3 class="workflow-heading" data-translate="forWorkersHeading">📱 For Workers</h3>
+                <div class="workflow-grid">
+                    <div class="workflow-card">
+                        <div class="workflow-number">01</div>
+                        <h4 class="workflow-title" data-translate="step1Title">Create Profile</h4>
+                        <p class="workflow-desc" data-translate="step1Desc">
+                            Register using your mobile number. Use voice to create profile if you can't read/write.
+                        </p>
+                    </div>
+                    <div class="workflow-card">
+                        <div class="workflow-number">02</div>
+                        <h4 class="workflow-title" data-translate="step2Title">AI Matches Jobs</h4>
+                        <p class="workflow-desc" data-translate="step2Desc">
+                            Our AI finds jobs based on your skills, location, and availability automatically.
+                        </p>
+                    </div>
+                    <div class="workflow-card">
+                        <div class="workflow-number">03</div>
+                        <h4 class="workflow-title" data-translate="step3Title">Get Verified</h4>
+                        <p class="workflow-desc" data-translate="step3Desc">
+                            NGO partners verify your profile to increase trust with employers.
+                        </p>
+                    </div>
+                    <div class="workflow-card">
+                        <div class="workflow-number">04</div>
+                        <h4 class="workflow-title" data-translate="step4Title">Work & Get Paid</h4>
+                        <p class="workflow-desc" data-translate="step4Desc">
+                            Complete work and receive secure payment directly to your account.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- For Employers -->
+            <div class="workflow-section">
+                <h3 class="workflow-heading" data-translate="forEmployersHeading">💼 For Employers</h3>
+                <div class="workflow-grid">
+                    <div class="workflow-card">
+                        <div class="workflow-number">01</div>
+                        <h4 class="workflow-title" data-translate="empStep1Title">Post Job</h4>
+                        <p class="workflow-desc" data-translate="empStep1Desc">
+                            Create a job posting with details about work, duration, and payment.
+                        </p>
+                    </div>
+                    <div class="workflow-card">
+                        <div class="workflow-number">02</div>
+                        <h4 class="workflow-title" data-translate="empStep2Title">AI Suggests Workers</h4>
+                        <p class="workflow-desc" data-translate="empStep2Desc">
+                            Get matched with verified workers who fit your requirements.
+                        </p>
+                    </div>
+                    <div class="workflow-card">
+                        <div class="workflow-number">03</div>
+                        <h4 class="workflow-title" data-translate="empStep3Title">Select & Hire</h4>
+                        <p class="workflow-desc" data-translate="empStep3Desc">
+                            Review profiles, ratings, and hire the right worker for your job.
+                        </p>
+                    </div>
+                    <div class="workflow-card">
+                        <div class="workflow-number">04</div>
+                        <h4 class="workflow-title" data-translate="empStep4Title">Rate & Review</h4>
+                        <p class="workflow-desc" data-translate="empStep4Desc">
+                            Provide feedback to help workers build their reputation.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Job Categories -->
+    <section class="categories-section" id="categories">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title" data-translate="categoriesTitle">JOB CATEGORIES</h2>
+                <p class="section-subtitle" data-translate="categoriesSubtitle">Find work in your trade</p>
+            </div>
+            
+            <div class="categories-grid">
+                <a href="pages/jobs.html?category=carpentry" class="category-card">
+                    <h3 class="category-name" data-translate="catCarpentry">Carpentry</h3>
+                    <p class="category-count">2,847 <span data-translate="jobs">jobs</span></p>
+                    <div class="category-overlay"></div>
+                </a>
+                <a href="pages/jobs.html?category=painting" class="category-card">
+                    <h3 class="category-name" data-translate="catPainting">Painting</h3>
+                    <p class="category-count">1,923 <span data-translate="jobs">jobs</span></p>
+                    <div class="category-overlay"></div>
+                </a>
+                <a href="pages/jobs.html?category=construction" class="category-card">
+                    <h3 class="category-name" data-translate="catConstruction">Construction</h3>
+                    <p class="category-count">4,156 <span data-translate="jobs">jobs</span></p>
+                    <div class="category-overlay"></div>
+                </a>
+                <a href="pages/jobs.html?category=plumbing" class="category-card">
+                    <h3 class="category-name" data-translate="catPlumbing">Plumbing</h3>
+                    <p class="category-count">1,654 <span data-translate="jobs">jobs</span></p>
+                    <div class="category-overlay"></div>
+                </a>
+                <a href="pages/jobs.html?category=electrical" class="category-card">
+                    <h3 class="category-name" data-translate="catElectrical">Electrical Work</h3>
+                    <p class="category-count">2,341 <span data-translate="jobs">jobs</span></p>
+                    <div class="category-overlay"></div>
+                </a>
+                <a href="pages/jobs.html?category=housekeeping" class="category-card">
+                    <h3 class="category-name" data-translate="catHousekeeping">Housekeeping</h3>
+                    <p class="category-count">3,089 <span data-translate="jobs">jobs</span></p>
+                    <div class="category-overlay"></div>
+                </a>
+                <a href="pages/jobs.html?category=gardening" class="category-card">
+                    <h3 class="category-name" data-translate="catGardening">Gardening</h3>
+                    <p class="category-count">876 <span data-translate="jobs">jobs</span></p>
+                    <div class="category-overlay"></div>
+                </a>
+                <a href="pages/jobs.html?category=delivery" class="category-card">
+                    <h3 class="category-name" data-translate="catDelivery">Delivery</h3>
+                    <p class="category-count">1,432 <span data-translate="jobs">jobs</span></p>
+                    <div class="category-overlay"></div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Key Features -->
+    <section class="features-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title" data-translate="featuresTitle">WHY CHOOSE KAAMCONNECT?</h2>
+                <p class="section-subtitle" data-translate="featuresSubtitle">Built specifically for daily wage workers</p>
+            </div>
+            
+            <div class="features-grid-main">
+                <div class="feature-card-main">
+                    <div class="feature-number">01</div>
+                    <h3 class="feature-title-main" data-translate="feature1Title">AI-Powered Matching</h3>
+                    <p class="feature-description" data-translate="feature1Desc">
+                        Smart algorithm matches you with the right jobs based on your skills, 
+                        location, and availability. No more endless searching.
+                    </p>
+                </div>
+                <div class="feature-card-main">
+                    <div class="feature-number">02</div>
+                    <h3 class="feature-title-main" data-translate="feature2Title">Voice-Based Profiles</h3>
+                    <p class="feature-description" data-translate="feature2Desc">
+                        Can't read or write? No problem! Create your complete profile using 
+                        just your voice in your preferred language.
+                    </p>
+                </div>
+                <div class="feature-card-main">
+                    <div class="feature-number">03</div>
+                    <h3 class="feature-title-main" data-translate="feature3Title">Multilingual Support</h3>
+                    <p class="feature-description" data-translate="feature3Desc">
+                        Use the platform in Hindi, Bengali, Telugu, Tamil, Marathi, and 
+                        more regional languages for easy understanding.
+                    </p>
+                </div>
+                <div class="feature-card-main">
+                    <div class="feature-number">04</div>
+                    <h3 class="feature-title-main" data-translate="feature4Title">NGO Verified</h3>
+                    <p class="feature-description" data-translate="feature4Desc">
+                        All workers and employers are verified by trusted NGO partners, 
+                        ensuring safety and legitimacy for everyone.
+                    </p>
+                </div>
+                <div class="feature-card-main">
+                    <div class="feature-number">05</div>
+                    <h3 class="feature-title-main" data-translate="feature5Title">Secure Payments</h3>
+                    <p class="feature-description" data-translate="feature5Desc">
+                        Payment protection ensures you get paid for your work. Funds are 
+                        held securely and released after job completion.
+                    </p>
+                </div>
+                <div class="feature-card-main">
+                    <div class="feature-number">06</div>
+                    <h3 class="feature-title-main" data-translate="feature6Title">Mobile-First Design</h3>
+                    <p class="feature-description" data-translate="feature6Desc">
+                        Easy to use on any smartphone. Simple interface designed for 
+                        workers with limited digital literacy.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="testimonials-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title" data-translate="testimonialsTitle">SUCCESS STORIES</h2>
+                <p class="section-subtitle" data-translate="testimonialsSubtitle">What our users say</p>
+            </div>
+
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="testimonial-stars">⭐⭐⭐⭐⭐</div>
+                    <p class="testimonial-text" data-translate="testimonial1">
+                        "I found regular painting work through KaamConnect. The voice feature 
+                        helped me create my profile easily. Now I get 3-4 jobs every week!"
+                    </p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">👨</div>
+                        <div class="author-info">
+                            <div class="author-name">Ramesh Kumar</div>
+                            <div class="author-role" data-translate="testimonial1Role">Painter, Delhi</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div class="testimonial-stars">⭐⭐⭐⭐⭐</div>
+                    <p class="testimonial-text" data-translate="testimonial2">
+                        "As a contractor, I need reliable workers fast. KaamConnect's AI matching 
+                        gives me verified workers in minutes. Game changer for my business!"
+                    </p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">👩</div>
+                        <div class="author-info">
+                            <div class="author-name">Priya Sharma</div>
+                            <div class="author-role" data-translate="testimonial2Role">Contractor, Mumbai</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial-card">
+                    <div class="testimonial-stars">⭐⭐⭐⭐⭐</div>
+                    <p class="testimonial-text" data-translate="testimonial3">
+                        "The NGO verification gives me confidence. I know the employers are 
+                        legitimate and I'll get paid. Best platform for daily wage workers!"
+                    </p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">👨</div>
+                        <div class="author-info">
+                            <div class="author-name">Mohammed Aslam</div>
+                            <div class="author-role" data-translate="testimonial3Role">Carpenter, Bangalore</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-content">
+                <h2 class="cta-title" data-translate="ctaTitle">READY TO GET STARTED?</h2>
+                <p class="cta-subtitle" data-translate="ctaSubtitle">
+                    Join thousands of workers and employers who trust KaamConnect
+                </p>
+                <div class="cta-buttons">
+                    <a href="pages/register.html" class="btn-large btn-primary" data-translate="ctaRegister">
+                        Register Now - It's Free
+                    </a>
+                    <a href="pages/about.html" class="btn-large btn-outline" data-translate="ctaLearn">
+                        Learn More
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-col">
+                    <div class="footer-logo">
+                        <span class="logo-icon">🔨</span>
+                        <span class="logo-text">KAAMCONNECT</span>
+                    </div>
+                    <p class="footer-description" data-translate="footerDesc">
+                        AI-enabled job platform connecting daily wage workers with verified 
+                        employers. Empowering underserved communities through technology.
+                    </p>
+                    <div class="footer-social">
+                        <a href="#" class="social-link">📘</a>
+                        <a href="#" class="social-link">📷</a>
+                        <a href="#" class="social-link">🐦</a>
+                        <a href="#" class="social-link">📹</a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4 class="footer-heading" data-translate="footerWorkers">For Workers</h4>
+                    <ul class="footer-links">
+                        <li><a href="pages/jobs.html" data-translate="footerFindJobs">Find Jobs</a></li>
+                        <li><a href="pages/register.html?type=worker" data-translate="footerCreateProfile">Create Profile</a></li>
+                        <li><a href="pages/voice-profile.html" data-translate="footerVoiceProfile">Voice Profile</a></li>
+                        <li><a href="#" data-translate="footerHowItWorks">How It Works</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4 class="footer-heading" data-translate="footerEmployers">For Employers</h4>
+                    <ul class="footer-links">
+                        <li><a href="pages/post-job.html" data-translate="footerPostJob">Post a Job</a></li>
+                        <li><a href="pages/register.html?type=employer" data-translate="footerEmployerReg">Employer Registration</a></li>
+                        <li><a href="#" data-translate="footerPricing">Pricing</a></li>
+                        <li><a href="#" data-translate="footerFAQ">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4 class="footer-heading" data-translate="footerCompany">Company</h4>
+                    <ul class="footer-links">
+                        <li><a href="pages/about.html" data-translate="footerAbout">About Us</a></li>
+                        <li><a href="pages/ngo-portal.html" data-translate="footerNGO">NGO Partners</a></li>
+                        <li><a href="#" data-translate="footerContact">Contact</a></li>
+                        <li><a href="#" data-translate="footerPrivacy">Privacy Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 KaamConnect. <span data-translate="footerRights">All rights reserved.</span></p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/translations.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
