@@ -1,32 +1,32 @@
-package com.kaamconnect.backend.entity;
+package com.kaamconnect.backend.dto;
 
-import jakarta.persistence.*;
+public class UserResponse {
 
-@Entity
-@Table(name = "users")
-public class User {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String fullname;
-
-    @Column(unique = true, nullable = false)
     private String mobile;
-
-    private String password;
     private String skill;
     private String company;
     private String location;
 
-    @Enumerated(EnumType.STRING)
-    private Role role = Role.USER;
+    public UserResponse() {
+    }
 
-    public User() {}
+    public UserResponse(Long id, String fullname, String mobile, String skill, String company, String location) {
+        this.id = id;
+        this.fullname = fullname;
+        this.mobile = mobile;
+        this.skill = skill;
+        this.company = company;
+        this.location = location;
+    }
 
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getFullname() {
@@ -43,14 +43,6 @@ public class User {
 
     public void setMobile(String mobile) {
         this.mobile = mobile;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public String getSkill() {
@@ -75,13 +67,5 @@ public class User {
 
     public void setLocation(String location) {
         this.location = location;
-    }
-
-    public Role getRole() {
-        return role;
-    }
-
-    public void setRole(Role role) {
-        this.role = role;
     }
 }

@@ -1,32 +1,32 @@
-package com.kaamconnect.backend.entity;
+package com.kaamconnect.backend.dto;
 
-import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 
-@Entity
-@Table(name = "users")
-public class User {
+public class RegisterRequest {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
+    @NotBlank(message = "Full name is required")
     private String fullname;
 
-    @Column(unique = true, nullable = false)
+    @NotBlank(message = "Mobile is required")
+    @Pattern(regexp = "^[0-9]{10}$", message = "Mobile must be a valid 10-digit number")
     private String mobile;
 
+    @NotBlank(message = "Password is required")
+    @Size(min = 6, message = "Password must be at least 6 characters")
     private String password;
+
+    @NotBlank(message = "Skill is required")
     private String skill;
+
+    @NotBlank(message = "Company is required")
     private String company;
+
+    @NotBlank(message = "Location is required")
     private String location;
 
-    @Enumerated(EnumType.STRING)
-    private Role role = Role.USER;
-
-    public User() {}
-
-    public Long getId() {
-        return id;
+    public RegisterRequest() {
     }
 
     public String getFullname() {
@@ -75,13 +75,5 @@ public class User {
 
     public void setLocation(String location) {
         this.location = location;
-    }
-
-    public Role getRole() {
-        return role;
-    }
-
-    public void setRole(Role role) {
-        this.role = role;
     }
 }
