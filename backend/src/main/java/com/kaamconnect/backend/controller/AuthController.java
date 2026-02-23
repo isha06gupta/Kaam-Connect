@@ -40,9 +40,8 @@ public class AuthController {
 
         if (authenticatedUser.isPresent()) {
             User user = authenticatedUser.get();
-            String subject = user.getMobile() != null && !user.getMobile().isBlank() ? user.getMobile() : user.getFullname();
             Role role = user.getRole() != null ? user.getRole() : Role.USER;
-            String token = jwtUtil.generateToken(subject, role);
+            String token = jwtUtil.generateToken(user.getId(), role);
 
             Map<String, Object> successBody = new LinkedHashMap<>();
             successBody.put("success", true);

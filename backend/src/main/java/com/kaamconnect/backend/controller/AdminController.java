@@ -1,7 +1,7 @@
 package com.kaamconnect.backend.controller;
 
 import com.kaamconnect.backend.dto.UserResponse;
-import com.kaamconnect.backend.service.UserService;
+import com.kaamconnect.backend.service.AdminService;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,14 +14,14 @@ import java.util.List;
 @CrossOrigin(origins = "*")
 public class AdminController {
 
-    private final UserService userService;
+    private final AdminService adminService;
 
-    public AdminController(UserService userService) {
-        this.userService = userService;
+    public AdminController(AdminService adminService) {
+        this.adminService = adminService;
     }
 
     @GetMapping("/users")
     public List<UserResponse> getAllUsers() {
-        return userService.getAllUsers();
+        return adminService.getAllUsers();
     }
 }

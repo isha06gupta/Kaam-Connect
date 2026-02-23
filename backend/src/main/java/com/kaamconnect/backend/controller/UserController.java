@@ -2,16 +2,15 @@ package com.kaamconnect.backend.controller;
 
 import com.kaamconnect.backend.dto.ApiResponse;
 import com.kaamconnect.backend.dto.RegisterRequest;
+import com.kaamconnect.backend.dto.UpdateProfileRequest;
 import com.kaamconnect.backend.dto.UserResponse;
-import com.kaamconnect.backend.entity.User;
+import com.kaamconnect.backend.exception.UnauthorizedException;
 import com.kaamconnect.backend.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/users")
@@ -37,20 +36,34 @@ public class UserController {
 
     @GetMapping("/me")
     public ResponseEntity<ApiResponse<UserResponse>> getMyProfile() {
+        Long userId = getAuthenticatedUserId();
+        UserResponse userResponse = userService.getCurrentUserProfile(userId);
+        return ResponseEntity.ok(new ApiResponse<>(true, "Profile fetched successfully", userResponse));
+    }
+
+    @PutMapping("/me")
+    public ResponseEntity<ApiResponse<UserResponse>> updateMyProfile(@RequestBody UpdateProfileRequest updateProfileRequest) {
+        Long userId = getAuthenticatedUserId();
+        UserResponse userResponse = userService.updateProfile(userId, updateProfileRequest);
+        return ResponseEntity.ok(new ApiResponse<>(true, "Profile updated successfully", userResponse));
+    }
+
+    private Long getAuthenticatedUserId() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        if (authentication == null || authentication.getName() == null || authentication.getName().isBlank()) {
-            throw new RuntimeException("Unauthorized");
+        if (authentication == null || authentication.getPrincipal() == null) {
+            throw new UnauthorizedException("Unauthorized");
         }
 
-        String mobile = authentication.getName();
-        Optional<User> userOptional = userService.findByMobile(mobile);
+        Object principal = authentication.getPrincipal();
 
-        if (userOptional.isEmpty()) {
-            throw new RuntimeException("User not found");
+        try {
+            if (principal instanceof Long) {
+                return (Long) principal;
+            }
+            return Long.parseLong(principal.toString());
+        } catch (NumberFormatException ex) {
+            throw new UnauthorizedException("Unauthorized");
         }
-
-        UserResponse userResponse = userService.toUserResponse(userOptional.get());
-        return ResponseEntity.ok(new ApiResponse<>(true, "Profile fetched successfully", userResponse));
     }
 }

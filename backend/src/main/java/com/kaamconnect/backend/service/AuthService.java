@@ -19,8 +19,11 @@ public class AuthService {
     }
 
     public Optional<User> authenticate(String login, String rawPassword) {
-
         Optional<User> userOptional = userRepository.findByMobile(login);
+
+        if (userOptional.isEmpty()) {
+            userOptional = userRepository.findByFullname(login);
+        }
 
         if (userOptional.isPresent()
                 && passwordEncoder.matches(rawPassword, userOptional.get().getPassword())) {

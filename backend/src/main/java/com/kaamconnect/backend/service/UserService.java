@@ -1,9 +1,12 @@
 package com.kaamconnect.backend.service;
 
 import com.kaamconnect.backend.dto.RegisterRequest;
+import com.kaamconnect.backend.dto.UpdateProfileRequest;
 import com.kaamconnect.backend.dto.UserResponse;
 import com.kaamconnect.backend.entity.Role;
 import com.kaamconnect.backend.entity.User;
+import com.kaamconnect.backend.exception.BadRequestException;
+import com.kaamconnect.backend.exception.ResourceNotFoundException;
 import com.kaamconnect.backend.repository.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -24,7 +27,7 @@ public class UserService {
 
     public UserResponse registerUser(RegisterRequest request) {
         if (userRepository.findByMobile(request.getMobile()).isPresent()) {
-            throw new RuntimeException("Mobile number already registered");
+            throw new BadRequestException("Mobile number already registered");
         }
 
         User user = new User();
@@ -42,6 +45,33 @@ public class UserService {
 
     public Optional<User> findByMobile(String mobile) {
         return userRepository.findByMobile(mobile);
+    }
+
+    public UserResponse getCurrentUserProfile(Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+        return toUserResponse(user);
+    }
+
+    public UserResponse updateProfile(Long userId, UpdateProfileRequest request) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+
+        if (request.getFullname() != null) {
+            user.setFullname(request.getFullname());
+        }
+        if (request.getSkill() != null) {
+            user.setSkill(request.getSkill());
+        }
+        if (request.getCompany() != null) {
+            user.setCompany(request.getCompany());
+        }
+        if (request.getLocation() != null) {
+            user.setLocation(request.getLocation());
+        }
+
+        User updatedUser = userRepository.save(user);
+        return toUserResponse(updatedUser);
     }
 
     public List<UserResponse> getAllUsers() {
