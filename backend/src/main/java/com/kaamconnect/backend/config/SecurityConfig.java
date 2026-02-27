@@ -42,11 +42,26 @@ public class SecurityConfig {
                 )
 
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/auth/**", "/api/users/register").permitAll()
-                        .requestMatchers("/api/admin/**").hasRole("ADMIN")
-                        .requestMatchers("/api/users/me").authenticated()
-                        .anyRequest().authenticated()
-                )
+        // allow frontend static files
+        .requestMatchers(
+                "/",
+                "/index.html",
+                "/pages/**",
+                "/js/**",
+                "/css/**",
+                "/images/**"
+        ).permitAll()
+
+        // public backend endpoints
+        .requestMatchers("/api/auth/**").permitAll()
+        .requestMatchers("/api/users/register").permitAll()
+
+        // admin protection
+        .requestMatchers("/api/admin/**").hasRole("ADMIN")
+
+        // everything else requires login
+        .anyRequest().authenticated()
+)
 
                 .httpBasic(httpBasic -> httpBasic.disable())
                 .formLogin(form -> form.disable())
