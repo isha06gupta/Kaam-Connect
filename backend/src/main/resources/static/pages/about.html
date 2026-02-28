@@ -1,121 +1,142 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About Us - KaamConnect</title>
-    <link rel="stylesheet" href="../css/style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About Us - KaamConnect</title>
+
+<link rel="stylesheet" href="../css/style.css">
+
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
+
 <body>
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="container">
-            <div class="nav-content">
-                <a href="../index.html" class="logo">
-                    <span class="logo-icon">🔨</span>
-                    <span class="logo-text">KAAMCONNECT</span>
-                </a>
-                <ul class="nav-links">
-                    <li><a href="../index.html">Home</a></li>
-                    <li><a href="jobs.html">Find Jobs</a></li>
-                    <li><a href="post-job.html">Post Job</a></li>
-                    <li><a href="about.html" class="active">About</a></li>
-                    <li><a href="ngo-portal.html">NGO Portal</a></li>
-                </ul>
-                <div class="nav-actions">
-                    <button class="language-toggle" onclick="openLanguageModal()">
-                        <span class="lang-icon">🌐</span>
-                        <span id="currentLang">EN</span>
-                    </button>
-                    <a href="login.html" class="btn-outline">Login</a>
-                    <a href="register.html" class="btn-primary nav-cta">Register</a>
-                </div>
-                <button class="mobile-menu-toggle">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </button>
-            </div>
-        </div>
-    </nav>
 
-    <!-- Page Header -->
-    <div class="page-header">
-        <div class="container">
-            <h1 class="page-title">ABOUT KAAMCONNECT</h1>
-            <p class="page-subtitle">Empowering daily wage workers through technology</p>
-        </div>
-    </div>
+<!-- NAVBAR -->
+<nav class="navbar">
+<div class="container">
+<div class="nav-content">
 
-    <!-- About Content -->
-    <section style="padding: 4rem 0;">
-        <div class="container" style="max-width: 900px;">
-            <div style="background: white; padding: 3rem; border-radius: 12px; box-shadow: var(--shadow-sm); margin-bottom: 3rem;">
-                <h2 style="font-family: var(--font-display); font-size: 2.5rem; margin-bottom: 1.5rem;">OUR MISSION</h2>
-                <p style="font-size: 1.1rem; line-height: 1.8; color: var(--gray-700); margin-bottom: 1.5rem;">
-                    KaamConnect is an AI-enabled job platform specifically designed for daily wage and semi-skilled workers. 
-                    We bridge the gap between hardworking individuals and employers who need their skills, while addressing 
-                    the challenges of digital literacy and job accessibility in underserved communities.
-                </p>
-                <p style="font-size: 1.1rem; line-height: 1.8; color: var(--gray-700);">
-                    Our platform uses artificial intelligence to match workers with suitable jobs based on their skills, 
-                    location, and availability. We provide multilingual support and voice-based profile creation to ensure 
-                    that everyone, regardless of their education level, can access employment opportunities.
-                </p>
-            </div>
+<a href="../index.html" class="logo">
+<span class="logo-icon">🔨</span>
+<span class="logo-text">KAAMCONNECT</span>
+</a>
 
-            <div style="background: white; padding: 3rem; border-radius: 12px; box-shadow: var(--shadow-sm); margin-bottom: 3rem;">
-                <h2 style="font-family: var(--font-display); font-size: 2.5rem; margin-bottom: 1.5rem;">KEY FEATURES</h2>
-                <ul style="list-style: none; padding: 0;">
-                    <li style="padding: 1rem 0; border-bottom: 1px solid var(--gray-200);">
-                        <h3 style="font-weight: 700; margin-bottom: 0.5rem;">🤖 AI-Powered Job Matching</h3>
-                        <p style="color: var(--gray-700);">Smart algorithms connect workers with jobs that match their skills and location</p>
-                    </li>
-                    <li style="padding: 1rem 0; border-bottom: 1px solid var(--gray-200);">
-                        <h3 style="font-weight: 700; margin-bottom: 0.5rem;">🎤 Voice-Based Profile Creation</h3>
-                        <p style="color: var(--gray-700);">Workers can create profiles using speech-to-text technology in their native language</p>
-                    </li>
-                    <li style="padding: 1rem 0; border-bottom: 1px solid var(--gray-200);">
-                        <h3 style="font-weight: 700; margin-bottom: 0.5rem;">🌐 Multilingual Support</h3>
-                        <p style="color: var(--gray-700);">Available in English, Hindi, Bengali, Telugu, Tamil, Marathi, and more</p>
-                    </li>
-                    <li style="padding: 1rem 0; border-bottom: 1px solid var(--gray-200);">
-                        <h3 style="font-weight: 700; margin-bottom: 0.5rem;">✅ NGO Verification</h3>
-                        <p style="color: var(--gray-700);">Trusted NGO partners verify both workers and employers for safety</p>
-                    </li>
-                    <li style="padding: 1rem 0;">
-                        <h3 style="font-weight: 700; margin-bottom: 0.5rem;">💰 Secure Payments</h3>
-                        <p style="color: var(--gray-700);">Payment protection ensures workers get paid for completed work</p>
-                    </li>
-                </ul>
-            </div>
+<ul class="nav-links">
+<li><a href="../index.html">Home</a></li>
+<li><a href="jobs.html">Find Jobs</a></li>
+<li><a href="post-job.html">Post Job</a></li>
+<li><a href="about.html" class="active">About</a></li>
+<li><a href="ngo-portal.html">NGO Portal</a></li>
+</ul>
 
-            <div style="background: white; padding: 3rem; border-radius: 12px; box-shadow: var(--shadow-sm);">
-                <h2 style="font-family: var(--font-display); font-size: 2.5rem; margin-bottom: 1.5rem;">TECHNOLOGY STACK</h2>
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem;">
-                    <div>
-                        <h4 style="font-weight: 700; margin-bottom: 0.5rem; color: var(--primary);">Frontend</h4>
-                        <p style="color: var(--gray-700);">HTML, CSS, JavaScript</p>
-                    </div>
-                    <div>
-                        <h4 style="font-weight: 700; margin-bottom: 0.5rem; color: var(--primary);">Backend</h4>
-                        <p style="color: var(--gray-700);">Java Spring Boot (REST)</p>
-                    </div>
-                    <div>
-                        <h4 style="font-weight: 700; margin-bottom: 0.5rem; color: var(--primary);">Database</h4>
-                        <p style="color: var(--gray-700);">Supabase / PostgreSQL</p>
-                    </div>
-                    <div>
-                        <h4 style="font-weight: 700; margin-bottom: 0.5rem; color: var(--primary);">Machine Learning</h4>
-                        <p style="color: var(--gray-700);">Python Microservices</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+<div class="nav-actions">
+<a href="login.html" class="btn-outline">Login</a>
+<a href="register.html" class="btn-primary">Register</a>
+</div>
 
-    <script src="../js/translations.js"></script>
-    <script src="../js/main.js"></script>
+</div>
+</div>
+</nav>
+
+<!-- HERO -->
+<div class="page-header">
+<div class="container">
+<h1 class="page-title">ABOUT KAAMCONNECT</h1>
+<p class="page-subtitle">
+Connecting skills to opportunity. Empowering workers through accessible technology.
+</p>
+</div>
+</div>
+
+<section style="padding:4rem 0;">
+<div class="container" style="max-width:900px;">
+
+<!-- INTRO -->
+<div class="about-card">
+<h2>WHAT IS KAAMCONNECT?</h2>
+
+<p>
+KaamConnect is a digital employment platform designed for daily wage and semi-skilled workers who are often excluded from traditional online job systems.
+</p>
+
+<p>
+Millions of workers possess valuable skills but lack digital literacy, verified identity, or reliable access to employers. KaamConnect removes these barriers using voice technology, simplified workflows, and community verification.
+</p>
+</div>
+
+<!-- PROBLEM -->
+<div class="about-card">
+<h2>THE PROBLEM WE ARE SOLVING</h2>
+
+<ul class="about-list">
+<li>❌ Informal hiring leads to exploitation and unpaid work</li>
+<li>❌ Workers struggle with complex apps and forms</li>
+<li>❌ Employers cannot find trusted local workers</li>
+<li>❌ Lack of verification reduces safety and trust</li>
+</ul>
+</div>
+
+<!-- ACHIEVEMENTS -->
+<div class="about-card">
+<h2>WHAT WE HAVE ACHIEVED</h2>
+
+<ul class="about-list">
+<li>✔ Voice-based worker registration for low-literacy users</li>
+<li>✔ AI-assisted job matching based on skill and location</li>
+<li>✔ Worker & Employer role-based dashboards</li>
+<li>✔ Public job discovery without login barriers</li>
+<li>✔ Secure authentication and profile management</li>
+<li>✔ Inclusive multilingual platform design</li>
+</ul>
+</div>
+
+<!-- NGO -->
+<div class="about-card">
+<h2>NGO & COMMUNITY PARTNERSHIPS</h2>
+
+<p>
+KaamConnect is built with a community-first approach. We envision partnerships with NGOs and local organizations to verify workers, support onboarding, and build trust between employers and workers.
+</p>
+
+<p>
+NGOs can act as verification partners, helping workers who may not have formal documentation gain access to digital employment opportunities.
+</p>
+</div>
+
+<!-- IMPACT -->
+<div class="about-card">
+<h2>OUR IMPACT VISION</h2>
+
+<p>
+Our goal is not just job matching — it is economic empowerment.
+</p>
+
+<ul class="about-list">
+<li>✔ Reduce unemployment in informal sectors</li>
+<li>✔ Enable digital inclusion for rural workers</li>
+<li>✔ Improve worker safety and payment security</li>
+<li>✔ Build a trusted labor ecosystem</li>
+</ul>
+</div>
+
+<!-- FUTURE -->
+<div class="about-card">
+<h2>WHAT'S NEXT</h2>
+
+<ul class="about-list">
+<li>✔ Full multilingual voice onboarding</li>
+<li>✔ Worker verification badges</li>
+<li>✔ Rating & reputation system</li>
+<li>✔ Integrated digital payments</li>
+<li>✔ NGO administration dashboard</li>
+</ul>
+</div>
+
+</div>
+</section>
+
+<script src="../js/main.js"></script>
+
 </body>
 </html>

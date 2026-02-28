@@ -14,107 +14,88 @@
 
 <body>
 
-<div class="auth-container">
+<div class="register-layout">
 
-    <div class="auth-content">
+    <div class="register-form-section">
+        <div class="auth-content">
 
-        <div class="auth-header">
-            <a href="../index.html" class="logo">
-                <span class="logo-icon">🔨</span>
-                <span class="logo-text">KAAMCONNECT</span>
-            </a>
+            <div class="auth-header">
+                <a href="../index.html" class="logo">
+                    <span class="logo-icon">🔨</span>
+                    <span class="logo-text">KAAMCONNECT</span>
+                </a>
 
-            <h1 id="registerHeading">Create Account</h1>
-            <p>Join thousands of workers and employers</p>
+                <h1>Create Account</h1>
+                <p>Join thousands of workers and employers</p>
+            </div>
+
+            <form class="auth-form" id="registerForm">
+
+                <div class="form-group">
+                    <label for="fullname">Full Name</label>
+                    <input type="text" id="fullname" name="fullname"
+                           placeholder="Enter full name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="mobile">Mobile Number</label>
+                    <input type="tel" id="mobile" name="mobile"
+                           placeholder="Enter mobile number" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password"
+                           placeholder="Create password" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="skill">Primary Skill</label>
+                    <select id="skill" name="skill" required>
+                        <option value="">Select Skill</option>
+                        <option value="carpentry">Carpentry</option>
+                        <option value="painting">Painting</option>
+                        <option value="plumbing">Plumbing</option>
+                        <option value="electrical">Electrical Work</option>
+                        <option value="construction">Construction</option>
+                        <option value="housekeeping">Housekeeping</option>
+                        <option value="gardening">Gardening</option>
+                        <option value="delivery">Delivery</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="company">Company Name</label>
+                    <input type="text" id="company" name="company"
+                           placeholder="Company name">
+                </div>
+
+                <div class="form-group">
+                    <label for="location">Location</label>
+                    <input type="text" id="location" name="location"
+                           placeholder="Enter location" required>
+                </div>
+
+                <button type="submit" class="btn-primary btn-large btn-block">
+                    Register
+                </button>
+
+            </form>
+
         </div>
+    </div>
 
-        <form class="auth-form" id="registerForm">
-
-            <div class="form-group">
-                <label for="fullname">Full Name</label>
-                <input type="text"
-                       id="fullname"
-                       name="fullname"
-                       placeholder="Enter full name"
-                       required>
-            </div>
-
-            <div class="form-group">
-                <label for="mobile">Mobile Number</label>
-                <input type="tel"
-                       id="mobile"
-                       name="mobile"
-                       placeholder="Enter mobile number"
-                       required>
-            </div>
-
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password"
-                       id="password"
-                       name="password"
-                       placeholder="Create password"
-                       required>
-            </div>
-
-            <div class="form-group" id="skillField">
-                <label for="skill">Primary Skill</label>
-                <select id="skill" name="skill" title="Primary Skill" required>
-                    <option value="">Select Skill</option>
-                    <option value="carpentry">Carpentry</option>
-                    <option value="painting">Painting</option>
-                    <option value="plumbing">Plumbing</option>
-                    <option value="electrical">Electrical Work</option>
-                    <option value="construction">Construction</option>
-                    <option value="housekeeping">Housekeeping</option>
-                    <option value="gardening">Gardening</option>
-                    <option value="delivery">Delivery</option>
-                </select>
-            </div>
-
-            <div class="form-group" id="companyField">
-                <label for="company" id="companyLabel">Company Name</label>
-                <input type="text"
-                       id="company"
-                       name="company"
-                       placeholder="Company name">
-            </div>
-
-            <div class="form-group">
-                <label for="location">Location</label>
-                <input type="text"
-                       id="location"
-                       name="location"
-                       placeholder="Enter location"
-                       required>
-            </div>
-
-            <button type="submit" class="btn-primary btn-large btn-block">
-                Register
-            </button>
-
-            <div class="auth-divider">
-                <span>OR</span>
-            </div>
-
-            <a href="voice-profile.html" class="btn-voice-login">
-                🎤 Create Profile Using Voice
-            </a>
-
-            <p class="auth-footer">
-                Already have an account?
-                <a href="login.html">Login</a>
-            </p>
-
-        </form>
-
+    <div class="register-image-section">
+        <img src="/images/worker.jpg" class="register-image">
     </div>
 
 </div>
+
 <script src="../js/api.js"></script>
 <script src="../js/toast.js"></script>
 <script src="../js/translations.js"></script>
 <script src="../js/auth.js"></script>
+<script src="../js/register.js"></script>
 
 </body>
 </html>

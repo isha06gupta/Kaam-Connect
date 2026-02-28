@@ -1350,7 +1350,7 @@ section {
 
 .auth-header {
     text-align: center;
-    margin-bottom: 3rem;
+    margin-bottom: 1rem;
 }
 
 .auth-header h1 {
@@ -1780,50 +1780,147 @@ section {
     cursor: pointer;
 }
 /* ===== COMPACT FILTER SIDEBAR FIX ===== */
+/* ===== FILTER TYPOGRAPHY CLEAN ===== */
 
-.filters-sidebar {
-    flex: 0 0 260px;
-    background: var(--white);
-    padding: 1.5rem;
-    border-radius: 12px;
-    box-shadow: var(--shadow-sm);
-
-    height: fit-content;        /* ⭐ prevents giant box */
-}
-
-/* spacing between sections */
-.filter-group {
+.filters-sidebar h3 {
+    font-family: var(--font-display);
+    letter-spacing: 2px;
+    text-transform: uppercase;
     margin-bottom: 1.5rem;
 }
-
-/* title spacing */
-.filters-title {
-    margin-bottom: 1rem;
+.filters-sidebar {
+    flex: 0 0 260px;   /* fixed width like before */
+    height: fit-content;
 }
 
-/* make checkboxes horizontal */
+.filter-group {
+    margin-bottom: 1.8rem;
+}
+
+.filter-group h4 {
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--secondary);
+    margin-bottom: 0.6rem;
+}
+
+/* checkbox row */
 .filter-group .filter-option {
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    margin-right: 12px;
-    margin-bottom: 8px;
+    margin-right: 14px;
+    margin-bottom: 10px;
 }
 
-/* reduce checkbox spacing */
+/* checkbox labels */
 .filter-option label {
-    font-size: 0.9rem;
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    font-weight: 500;
     color: var(--gray-700);
+    cursor: pointer;
 }
-
-/* group headings tighter */
-.filter-group h4 {
-    margin-bottom: 0.5rem;
-}
-
 /* improve overall spacing */
 .jobs-layout {
     display: flex;
     align-items: flex-start;
     gap: 2.5rem;   /* ⭐ adds breathing space */
+}
+/*REGISTER PAGE LAYOUT*/
+
+.register-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 100vh;
+    background: var(--background);
+}
+
+/* LEFT SIDE FORM */
+.register-form-section {
+    display: flex;
+    justify-content: center;
+
+    /* 🔥 FIX 1: remove vertical centering gap */
+    align-items: flex-start;
+
+    padding: 2rem 4rem;
+}
+
+/* 🔥 FIX 2: remove huge top spacing */
+.auth-content {
+    padding: 0;
+    margin-top: 1.5rem;
+    max-width: 480px;
+    width: 100%;
+}
+
+/* tighter header spacing */
+.auth-header {
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.auth-header h1 {
+    margin: 1rem 0 0.5rem;
+}
+
+/* RIGHT SIDE IMAGE */
+.register-image-section {
+    width: 100%;
+    height: auto;          /* 🔥 IMPORTANT */
+}
+
+.register-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: sticky;
+    top: 0;
+}
+
+/* MOBILE */
+@media (max-width: 900px) {
+
+    .register-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .register-image-section {
+        display: none;
+    }
+
+    .register-form-section {
+        padding: 2rem;
+    }
+}
+.about-card{
+background:white;
+padding:3rem;
+border-radius:12px;
+box-shadow:var(--shadow-sm);
+margin-bottom:3rem;
+}
+
+.about-card h2{
+font-family:var(--font-display);
+font-size:2.3rem;
+margin-bottom:1.5rem;
+}
+
+.about-card p{
+color:var(--gray-700);
+line-height:1.8;
+font-size:1.1rem;
+margin-bottom:1rem;
+}
+
+.about-list{
+list-style:none;
+padding:0;
+color:var(--gray-700);
+line-height:2;
+font-size:1.05rem;
 }
