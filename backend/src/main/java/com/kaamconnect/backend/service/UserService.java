@@ -37,7 +37,12 @@ public class UserService {
         user.setSkill(request.getSkill());
         user.setCompany(request.getCompany());
         user.setLocation(request.getLocation());
-        user.setRole(Role.USER);
+        Role role =
+        "employer".equalsIgnoreCase(request.getRole())
+                ? Role.EMPLOYER
+                : Role.USER;
+
+user.setRole(role);
 
         User savedUser = userRepository.save(user);
         return toUserResponse(savedUser);
@@ -59,6 +64,12 @@ public class UserService {
 
         if (request.getFullname() != null) {
             user.setFullname(request.getFullname());
+        }
+        if (request.getMobile() != null && !request.getMobile().equals(user.getMobile())) {
+            if (userRepository.findByMobile(request.getMobile()).isPresent()) {
+                throw new BadRequestException("Mobile number already registered");
+            }
+            user.setMobile(request.getMobile());
         }
         if (request.getSkill() != null) {
             user.setSkill(request.getSkill());

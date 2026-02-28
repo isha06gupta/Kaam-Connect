@@ -1,8 +1,16 @@
-// Authentication + Profile integration using backend APIs
+// Authentication + Profile integration
+
+let selectedRegisterRole = 'worker';
+
+/* -------------------------------
+   FORM MESSAGE HELPERS
+--------------------------------*/
 
 function createFormMessage(form) {
     if (!form) return null;
+
     let box = form.querySelector('.form-message');
+
     if (!box) {
         box = document.createElement('div');
         box.className = 'form-message';
@@ -13,6 +21,7 @@ function createFormMessage(form) {
         box.style.display = 'none';
         form.prepend(box);
     }
+
     return box;
 }
 
@@ -23,7 +32,9 @@ function showFormMessage(form, message, type = 'error') {
     box.style.display = 'block';
     box.style.background = type === 'success' ? '#e8f8ee' : '#fdeaea';
     box.style.color = type === 'success' ? '#1f7a3e' : '#b42318';
-    box.style.border = `1px solid ${type === 'success' ? '#b8e6c8' : '#f3b3b3'}`;
+    box.style.border =
+        `1px solid ${type === 'success' ? '#b8e6c8' : '#f3b3b3'}`;
+
     box.textContent = message;
 }
 
@@ -31,167 +42,177 @@ function clearFormMessage(form) {
     const box = form?.querySelector('.form-message');
     if (!box) return;
     box.style.display = 'none';
-    box.textContent = '';
 }
+
+/* -------------------------------
+   VALIDATION MESSAGE
+--------------------------------*/
 
 function getValidationMessage(error) {
-    if (error?.payload?.errors && typeof error.payload.errors === 'object') {
+    if (error?.payload?.errors) {
         return Object.values(error.payload.errors).join(' | ');
     }
-    return error?.message || 'Something went wrong. Please try again.';
+    return error?.message || 'Something went wrong.';
 }
 
+/* -------------------------------
+   ROLE BASED REGISTER PAGE
+--------------------------------*/
+
+function getRegisterRole() {
+    const role = new URLSearchParams(window.location.search).get('role');
+    return role === 'employer' ? 'employer' : 'worker';
+}
+
+function setupRegisterRoleForm() {
+
+    const form = document.getElementById('registerForm');
+    if (!form) return;
+
+    selectedRegisterRole = getRegisterRole();
+
+    const heading = document.getElementById('registerHeading');
+    const skillField = document.getElementById('skillField');
+    const skillInput = document.getElementById('skill');
+    const companyField = document.getElementById('companyField');
+    const companyInput = document.getElementById('company');
+    const companyLabel = document.getElementById('companyLabel');
+
+    const isEmployer = selectedRegisterRole === 'employer';
+
+    if (heading) {
+        heading.textContent =
+            isEmployer ? 'Employer Registration' : 'Worker Registration';
+    }
+
+    if (skillField && skillInput) {
+        skillField.style.display = isEmployer ? 'none' : '';
+        skillInput.required = !isEmployer;
+        if (isEmployer) skillInput.value = '';
+    }
+
+    if (companyField && companyInput) {
+        companyField.style.display = isEmployer ? '' : 'none';
+        companyInput.required = isEmployer;
+        if (!isEmployer) companyInput.value = '';
+    }
+
+    if (companyLabel) {
+        companyLabel.textContent =
+            isEmployer ? 'Company Name' : 'Company Name (Optional)';
+    }
+}
+
+/* -------------------------------
+   LOGIN HANDLER
+--------------------------------*/
+
 async function handleLogin(event) {
+
     event.preventDefault();
 
     const form = event.target;
     clearFormMessage(form);
 
-    const login = document.getElementById('mobile')?.value?.trim();
-    const password = document.getElementById('password')?.value || '';
+    const login =
+        document.getElementById('mobile')?.value?.trim();
+
+    const password =
+        document.getElementById('password')?.value || '';
 
     try {
-        const response = await Api.post('/api/auth/login', { login, password });
+
+        const response = await Api.post('/api/auth/login', {
+            login,
+            password
+        });
+
         if (response?.token) {
             Api.setToken(response.token);
         }
 
-        showFormMessage(form, response?.message || 'Login successful.', 'success');
-        window.location.href = 'jobs.html';
+        showFormMessage(form,
+            response?.message || 'Login successful',
+            'success'
+        );
+
+        // ===== ROLE BASED REDIRECT =====
+        const meRes = await Api.get('/api/users/me');
+        const user = meRes.data || meRes;
+
+        const isEmployer =
+            user.company &&
+            user.company.toLowerCase() !== 'n/a';
+
+        window.location.href =
+            isEmployer
+                ? 'dashboard-employer.html'
+                : 'dashboard-worker.html';
+
     } catch (error) {
-        showFormMessage(form, getValidationMessage(error), 'error');
+        showFormMessage(form,
+            getValidationMessage(error),
+            'error'
+        );
     }
 
     return false;
 }
 
-function setupUserTypeSelector() {
-    const selector = document.querySelector('.user-type-selector');
-    if (!selector) return;
-
-    const [workerBtn, employerBtn] = selector.querySelectorAll('.type-btn');
-    if (!workerBtn || !employerBtn) return;
-
-    workerBtn.id = 'workerBtn';
-    employerBtn.id = 'employerBtn';
-
-    const setActive = (type) => {
-        if (type === 'worker') {
-            workerBtn.classList.add('active');
-            employerBtn.classList.remove('active');
-        } else {
-            employerBtn.classList.add('active');
-            workerBtn.classList.remove('active');
-        }
-    };
-
-    workerBtn.addEventListener('click', () => setActive('worker'));
-    employerBtn.addEventListener('click', () => setActive('employer'));
-}
+/* -------------------------------
+   REGISTER HANDLER
+--------------------------------*/
 
 async function handleRegister(event) {
+
     event.preventDefault();
 
     const form = event.target;
     clearFormMessage(form);
 
-    const workerBtn = document.getElementById('workerBtn');
-    const isWorker = !workerBtn || workerBtn.classList.contains('active');
+    const isEmployer = selectedRegisterRole === 'employer';
 
     const payload = {
-        fullname: document.getElementById('fullname')?.value?.trim() || '',
-        mobile: document.getElementById('mobile')?.value?.trim() || '',
-        password: document.getElementById('password')?.value || '',
-        skill: document.getElementById('skill')?.value || '',
-        company: document.getElementById('company')?.value?.trim() || (isWorker ? 'N/A' : ''),
-        location: document.getElementById('location')?.value?.trim() || ''
+        fullname: document.getElementById('fullname').value.trim(),
+        mobile: document.getElementById('mobile').value.trim(),
+        password: document.getElementById('password').value,
+        skill: isEmployer
+            ? 'general'
+            : document.getElementById('skill').value,
+        company: document.getElementById('company').value.trim() ||
+                 (isEmployer ? '' : 'N/A'),
+        location: document.getElementById('location').value.trim(),
+        role: isEmployer ? 'employer' : 'worker'   // ✅ CRITICAL FIX
     };
 
-    if (!isWorker && !payload.company) {
-        showFormMessage(form, 'Company name is required for employer registration.', 'error');
+    if (isEmployer && !payload.company) {
+        showFormMessage(form,
+            'Company name required for employer.',
+            'error');
         return false;
     }
 
     try {
-        const response = await Api.post('/api/users/register', payload);
-        showFormMessage(form, response?.message || 'Registration successful. Please login.', 'success');
-        window.location.href = 'login.html';
+
+        const response =
+            await Api.post('/api/users/register', payload);
+
+        showFormMessage(form,
+            response?.message ||
+            'Registration successful. Please login.',
+            'success'
+        );
+
+        setTimeout(() => {
+            window.location.href = 'login.html';
+        }, 800);
+
     } catch (error) {
-        showFormMessage(form, getValidationMessage(error), 'error');
+
+        showFormMessage(form,
+            getValidationMessage(error),
+            'error');
     }
 
     return false;
 }
-
-async function loadProfile() {
-    const profileForm = document.getElementById('profileForm');
-    if (!profileForm) return;
-
-    try {
-        const response = await Api.get('/api/users/me');
-        const profile = response?.data || response;
-
-        const fieldMap = ['fullname', 'mobile', 'skill', 'company', 'location'];
-        fieldMap.forEach((field) => {
-            const input = document.getElementById(field);
-            if (input && profile[field] !== undefined && profile[field] !== null) {
-                input.value = profile[field];
-            }
-        });
-    } catch (error) {
-        showFormMessage(profileForm, getValidationMessage(error), 'error');
-    }
-}
-
-async function handleProfileUpdate(event) {
-    event.preventDefault();
-    const form = event.target;
-    clearFormMessage(form);
-
-    const payload = {};
-    ['fullname', 'skill', 'company', 'location'].forEach((field) => {
-        const value = document.getElementById(field)?.value?.trim();
-        if (value) {
-            payload[field] = value;
-        }
-    });
-
-    try {
-        const response = await Api.put('/api/users/me', payload);
-        showFormMessage(form, response?.message || 'Profile updated successfully.', 'success');
-        await loadProfile();
-    } catch (error) {
-        showFormMessage(form, getValidationMessage(error), 'error');
-    }
-
-    return false;
-}
-
-function voiceLogin() {
-    const form = document.getElementById('loginForm');
-    showFormMessage(form, 'Voice login API is not available yet. Please use mobile/password login.', 'error');
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-    setupUserTypeSelector();
-
-    const loginForm = document.getElementById('loginForm');
-    if (loginForm) {
-        loginForm.addEventListener('submit', handleLogin);
-    }
-
-    const registerForm = document.getElementById('registerForm');
-    if (registerForm) {
-        registerForm.addEventListener('submit', handleRegister);
-    }
-
-    const profileForm = document.getElementById('profileForm');
-    if (profileForm) {
-        profileForm.addEventListener('submit', handleProfileUpdate);
-        loadProfile();
-    }
-});
-
-window.handleLogin = handleLogin;
-window.handleRegister = handleRegister;
-window.voiceLogin = voiceLogin;

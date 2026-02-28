@@ -1,6 +1,7 @@
 // Jobs page JavaScript (backend-integrated)
 
 let currentJobs = [];
+let toastScriptPromise = null;
 
 function createStatusMessage() {
     let box = document.getElementById('jobsStatusMessage');
@@ -37,6 +38,37 @@ function showStatus(message, type = 'info') {
     box.style.color = s.color;
     box.style.border = `1px solid ${s.border}`;
     box.textContent = message;
+}
+
+function ensureToast() {
+    if (typeof window.showToast === 'function') {
+        return Promise.resolve();
+    }
+
+    if (toastScriptPromise) {
+        return toastScriptPromise;
+    }
+
+    toastScriptPromise = new Promise((resolve) => {
+        const script = document.createElement('script');
+        script.src = '../js/toast.js';
+        script.onload = () => resolve();
+        script.onerror = () => resolve();
+        document.head.appendChild(script);
+    });
+
+    return toastScriptPromise;
+}
+
+async function toastOrStatus(message, type) {
+    await ensureToast();
+
+    if (typeof window.showToast === 'function') {
+        window.showToast(message, type);
+        return;
+    }
+
+    showStatus(message, type === 'error' ? 'error' : 'success');
 }
 
 function mapJob(job = {}) {
@@ -107,8 +139,6 @@ function createJobCard(job, index) {
 
 async function fetchJobs(params = {}) {
     try {
-        showStatus('Loading jobs...', 'info');
-
         const response = await Api.get('/api/jobs', params);
         const jobs = Array.isArray(response)
             ? response
@@ -117,11 +147,9 @@ async function fetchJobs(params = {}) {
         currentJobs = jobs.map(mapJob);
         renderJobs(currentJobs);
 
-        showStatus(`Loaded ${currentJobs.length} job(s).`, 'success');
-
     } catch (error) {
 
-        console.error("Fetch Jobs Error:", error);
+        console.error('Fetch Jobs Error:', error);
 
         const message =
             error?.payload?.message ||
@@ -148,30 +176,24 @@ function searchJobs() {
 
 async function applyJob(jobId) {
 
-    if (!Api.getToken()) {
-        showStatus('Please login to apply for jobs.', 'error');
-        window.location.href = 'login.html';
+    if (typeof requireAuth === 'function' && !requireAuth('Please login to apply')) {
         return;
     }
 
     try {
-        const response = await Api.post(`/api/jobs/${jobId}/apply`, {});
-
-        showStatus(
-            response?.message || 'Application submitted successfully.',
-            'success'
-        );
+        await Api.post(`/api/jobs/${jobId}/apply`, {});
+        await toastOrStatus('Application submitted successfully', 'success');
 
     } catch (error) {
 
-        console.log("Apply Error:", error);
+        console.log('Apply Error:', error);
 
         const message =
             error?.payload?.message ||
             error?.message ||
             'Unable to submit application.';
 
-        showStatus(message, 'error');
+        await toastOrStatus(message, 'error');
     }
 }
 

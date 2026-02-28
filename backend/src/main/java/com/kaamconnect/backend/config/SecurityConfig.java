@@ -4,6 +4,7 @@ import com.kaamconnect.backend.security.JwtAuthenticationFilter;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -30,49 +31,48 @@ public class SecurityConfig {
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
 
-                // ⭐ IMPORTANT PART (401 handling)
-                .exceptionHandling(ex -> ex
-                        .authenticationEntryPoint((request, response, authException) -> {
-                            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-                            response.setContentType("application/json");
-                            response.getWriter().write("""
-                                {"success":false,"message":"Unauthorized"}
-                                """);
-                        })
-                )
+                .exceptionHandling(ex -> ex.authenticationEntryPoint(
+                        (req,res,e)->{
+                            res.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                            res.setContentType("application/json");
+                            res.getWriter().write(
+                                    "{\"success\":false,\"message\":\"Unauthorized\"}"
+                            );
+                        }
+                ))
 
                 .authorizeHttpRequests(auth -> auth
-        // allow frontend static files
-        .requestMatchers(
-                "/",
-                "/index.html",
-                "/pages/**",
-                "/js/**",
-                "/css/**",
-                "/images/**"
-        ).permitAll()
+                        .requestMatchers(
+                                "/",
+                                "/index.html",
+                                "/pages/**",
+                                "/css/**",
+                                "/js/**",
+                                "/images/**"
+                        ).permitAll()
 
-        // public backend endpoints
-        .requestMatchers("/api/auth/**").permitAll()
-        .requestMatchers("/api/users/register").permitAll()
+                        .requestMatchers("/api/auth/**").permitAll()
+                        .requestMatchers("/api/users/register").permitAll()
 
-        // admin protection
-        .requestMatchers("/api/admin/**").hasRole("ADMIN")
+                        // Public job listing
+                        .requestMatchers(HttpMethod.GET,"/api/jobs").permitAll()
 
-        // everything else requires login
-        .anyRequest().authenticated()
-)
+                        // Require login
+                        .requestMatchers("/api/jobs/**").authenticated()
+                        .requestMatchers("/api/employer/**").authenticated()
+                        .requestMatchers("/api/users/me/**").authenticated()
 
-                .httpBasic(httpBasic -> httpBasic.disable())
-                .formLogin(form -> form.disable())
+                        .anyRequest().authenticated()
+                )
 
-                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(jwtAuthenticationFilter,
+                        UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
 
     @Bean
-    public PasswordEncoder passwordEncoder() {
+    public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
     }
 }

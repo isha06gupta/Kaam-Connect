@@ -1,3 +1,4 @@
+<!-- backend/src/main/resources/static/pages/register.html -->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -23,17 +24,10 @@
                 <span class="logo-text">KAAMCONNECT</span>
             </a>
 
-            <h1>Create Account</h1>
+            <h1 id="registerHeading">Create Account</h1>
             <p>Join thousands of workers and employers</p>
         </div>
 
-        <!-- USER TYPE -->
-        <div class="user-type-selector">
-            <button type="button" class="type-btn active">I'm a Worker</button>
-            <button type="button" class="type-btn">I'm an Employer</button>
-        </div>
-
-        <!-- REGISTER FORM -->
         <form class="auth-form" id="registerForm">
 
             <div class="form-group">
@@ -63,7 +57,7 @@
                        required>
             </div>
 
-            <div class="form-group">
+            <div class="form-group" id="skillField">
                 <label for="skill">Primary Skill</label>
                 <select id="skill" name="skill" title="Primary Skill" required>
                     <option value="">Select Skill</option>
@@ -78,8 +72,8 @@
                 </select>
             </div>
 
-            <div class="form-group">
-                <label for="company">Company Name (Optional)</label>
+            <div class="form-group" id="companyField">
+                <label for="company" id="companyLabel">Company Name</label>
                 <input type="text"
                        id="company"
                        name="company"
@@ -109,7 +103,7 @@
 
             <p class="auth-footer">
                 Already have an account?
-                <a href="login.html">Login Here</a>
+                <a href="login.html">Login</a>
             </p>
 
         </form>
@@ -118,6 +112,7 @@
 
 </div>
 <script src="../js/api.js"></script>
+<script src="../js/toast.js"></script>
 <script src="../js/translations.js"></script>
 <script src="../js/auth.js"></script>
 

@@ -1706,3 +1706,124 @@ section {
         grid-template-columns: 1fr;
     }
 }
+
+/* ===== JOB GRID LAYOUT ===== */
+
+.jobs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.5rem;
+}
+
+/* Job Card */
+.job-card {
+    background: var(--white);
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: var(--shadow-sm);
+    transition: var(--transition);
+}
+
+.job-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+}
+
+.job-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+}
+
+.job-category {
+    background: var(--gray-200);
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+}
+
+.job-badge {
+    background: #ff3b30;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 0.75rem;
+}
+
+.job-title {
+    font-size: 1.2rem;
+    margin: 0.5rem 0;
+}
+
+.job-company {
+    color: var(--gray-700);
+    margin-bottom: 0.5rem;
+}
+
+.job-details {
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+}
+
+.job-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.job-apply {
+    background: var(--primary);
+    color: white;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+/* ===== COMPACT FILTER SIDEBAR FIX ===== */
+
+.filters-sidebar {
+    flex: 0 0 260px;
+    background: var(--white);
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: var(--shadow-sm);
+
+    height: fit-content;        /* ⭐ prevents giant box */
+}
+
+/* spacing between sections */
+.filter-group {
+    margin-bottom: 1.5rem;
+}
+
+/* title spacing */
+.filters-title {
+    margin-bottom: 1rem;
+}
+
+/* make checkboxes horizontal */
+.filter-group .filter-option {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-right: 12px;
+    margin-bottom: 8px;
+}
+
+/* reduce checkbox spacing */
+.filter-option label {
+    font-size: 0.9rem;
+    color: var(--gray-700);
+}
+
+/* group headings tighter */
+.filter-group h4 {
+    margin-bottom: 0.5rem;
+}
+
+/* improve overall spacing */
+.jobs-layout {
+    display: flex;
+    align-items: flex-start;
+    gap: 2.5rem;   /* ⭐ adds breathing space */
+}

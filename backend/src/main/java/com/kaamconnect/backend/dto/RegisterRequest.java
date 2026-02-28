@@ -17,63 +17,38 @@ public class RegisterRequest {
     @Size(min = 6, message = "Password must be at least 6 characters")
     private String password;
 
-    @NotBlank(message = "Skill is required")
+    // Optional depending on role
     private String skill;
 
-    @NotBlank(message = "Company is required")
     private String company;
 
     @NotBlank(message = "Location is required")
     private String location;
 
-    public RegisterRequest() {
-    }
+    // NEW FIELD
+    @NotBlank(message = "Role is required")
+    private String role;
 
-    public String getFullname() {
-        return fullname;
-    }
+    public RegisterRequest() {}
 
-    public void setFullname(String fullname) {
-        this.fullname = fullname;
-    }
+    public String getFullname() { return fullname; }
+    public void setFullname(String fullname) { this.fullname = fullname; }
 
-    public String getMobile() {
-        return mobile;
-    }
+    public String getMobile() { return mobile; }
+    public void setMobile(String mobile) { this.mobile = mobile; }
 
-    public void setMobile(String mobile) {
-        this.mobile = mobile;
-    }
+    public String getPassword() { return password; }
+    public void setPassword(String password) { this.password = password; }
 
-    public String getPassword() {
-        return password;
-    }
+    public String getSkill() { return skill; }
+    public void setSkill(String skill) { this.skill = skill; }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+    public String getCompany() { return company; }
+    public void setCompany(String company) { this.company = company; }
 
-    public String getSkill() {
-        return skill;
-    }
+    public String getLocation() { return location; }
+    public void setLocation(String location) { this.location = location; }
 
-    public void setSkill(String skill) {
-        this.skill = skill;
-    }
-
-    public String getCompany() {
-        return company;
-    }
-
-    public void setCompany(String company) {
-        this.company = company;
-    }
-
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
+    public String getRole() { return role; }
+    public void setRole(String role) { this.role = role; }
 }

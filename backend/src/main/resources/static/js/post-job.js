@@ -32,9 +32,7 @@ function showPostMessage(message, type = 'error') {
 async function handleJobPost(event) {
     event.preventDefault();
 
-    if (!Api.getToken()) {
-        showPostMessage('Please login first to post a job.');
-        window.location.href = 'login.html';
+    if (typeof requireAuth === 'function' && !requireAuth('Login required to post jobs')) {
         return false;
     }
 
@@ -54,17 +52,25 @@ async function handleJobPost(event) {
     };
 
     try {
-        const response = await Api.post('/api/jobs', jobData);
-        showPostMessage(response?.message || 'Job posted successfully.', 'success');
+        await Api.post('/api/jobs', jobData);
+        if (typeof showToast === 'function') {
+            showToast('Job posted successfully', 'success');
+        } else {
+            showPostMessage('Job posted successfully', 'success');
+        }
         form.reset();
         setTimeout(() => {
             window.location.href = 'jobs.html';
-        }, 1000);
+        }, 500);
     } catch (error) {
         if (error?.payload?.errors) {
-            showPostMessage(Object.values(error.payload.errors).join(' | '), 'error');
+            const msg = Object.values(error.payload.errors).join(' | ');
+            if (typeof showToast === 'function') showToast(msg, 'error');
+            else showPostMessage(msg, 'error');
         } else {
-            showPostMessage(error?.message || 'Unable to post job.', 'error');
+            const msg = error?.message || 'Unable to post job.';
+            if (typeof showToast === 'function') showToast(msg, 'error');
+            else showPostMessage(msg, 'error');
         }
     }
 

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Worker Dashboard - KaamConnect</title>
+
+<link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body>
+
+<nav class="navbar">
+<div class="container">
+<div class="nav-content">
+
+<a href="../index.html" class="logo">
+🔨 KAAMCONNECT
+</a>
+
+<ul class="nav-links">
+<li><a href="jobs.html">Find Jobs</a></li>
+<li><a href="dashboard-worker.html" class="active">Dashboard</a></li>
+</ul>
+
+<div class="nav-actions"></div>
+
+</div>
+</div>
+</nav>
+
+<div class="page-header">
+<div class="container">
+<h1 class="page-title">WORKER DASHBOARD</h1>
+</div>
+</div>
+
+<section style="padding:2rem 0;">
+<div class="container" style="display:grid;gap:1.5rem;">
+
+<div class="dashboard-card">
+
+<div style="display:flex;justify-content:space-between;align-items:center;">
+<h3>Profile Summary</h3>
+<a href="profile.html" class="btn-primary">Edit Profile</a>
+</div>
+
+<p id="workerProfileSummary" style="margin-top:1rem;">Loading...</p>
+
+</div>
+
+<div class="dashboard-card">
+<h3>Applied Jobs</h3>
+<div id="appliedJobsList">Loading...</div>
+</div>
+
+<div class="dashboard-card">
+<h3>Work History</h3>
+<div id="workHistoryList">Loading...</div>
+</div>
+
+</div>
+</section>
+
+<script src="../js/api.js"></script>
+<script src="../js/toast.js"></script>
+<script src="../js/auth-guard.js"></script>
+<script src="../js/navbar-auth.js"></script>
+<script src="../js/dashboard-worker.js"></script>
+
+</body>
+</html>

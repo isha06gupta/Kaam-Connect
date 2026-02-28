@@ -3,6 +3,7 @@ package com.kaamconnect.backend.dto;
 public class UpdateProfileRequest {
 
     private String fullname;
+    private String mobile;
     private String skill;
     private String company;
     private String location;
@@ -16,6 +17,14 @@ public class UpdateProfileRequest {
 
     public void setFullname(String fullname) {
         this.fullname = fullname;
+    }
+
+    public String getMobile() {
+        return mobile;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
     }
 
     public String getSkill() {

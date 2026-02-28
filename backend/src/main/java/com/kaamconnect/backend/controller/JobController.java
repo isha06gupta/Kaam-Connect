@@ -1,6 +1,7 @@
 package com.kaamconnect.backend.controller;
 
 import com.kaamconnect.backend.dto.ApiResponse;
+import com.kaamconnect.backend.dto.JobApplicationResponse;
 import com.kaamconnect.backend.dto.JobRequest;
 import com.kaamconnect.backend.dto.JobResponse;
 import com.kaamconnect.backend.exception.UnauthorizedException;
@@ -42,6 +43,18 @@ public class JobController {
         Long userId = getAuthenticatedUserId();
         jobService.applyToJob(jobId, userId);
         return ResponseEntity.ok(new ApiResponse<>(true, "Applied to job successfully", "Application submitted"));
+    }
+
+    @GetMapping("/applied")
+    public ResponseEntity<ApiResponse<List<JobResponse>>> getAppliedJobs() {
+        Long userId = getAuthenticatedUserId();
+        return ResponseEntity.ok(new ApiResponse<>(true, "Applied jobs fetched", jobService.getAppliedJobs(userId)));
+    }
+
+    @GetMapping("/{id}/applications")
+    public ResponseEntity<ApiResponse<List<JobApplicationResponse>>> getJobApplications(@PathVariable("id") Long jobId) {
+        getAuthenticatedUserId();
+        return ResponseEntity.ok(new ApiResponse<>(true, "Job applications fetched", jobService.getApplicationsForJob(jobId)));
     }
 
     private Long getAuthenticatedUserId() {
