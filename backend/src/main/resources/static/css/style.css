@@ -560,10 +560,17 @@ section {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    opacity: 1;
+    visibility: visible;
+    transform: none;
     padding-top: 1.5rem;
     border-top: 1px solid var(--gray-200);
 }
-
+.job-card:hover .job-footer {
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+}
 .job-salary {
     font-size: 1.3rem;
     font-weight: 700;
@@ -574,7 +581,7 @@ section {
 
 .job-apply {
     padding: 0.6rem 1.5rem;
-    background: var(--secondary);
+    background: var(--primary);
     color: var(--white);
     border: none;
     border-radius: 4px;
@@ -1728,80 +1735,7 @@ section {
     }
 }
 
-/* ===== JOB GRID LAYOUT ===== */
-
-.jobs-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    gap: 1.5rem;
-}
-
-/* Job Card */
-.job-card {
-    background: var(--white);
-    padding: 1.5rem;
-    border-radius: 12px;
-    box-shadow: var(--shadow-sm);
-    transition: var(--transition);
-}
-
-.job-card:hover {
-    transform: translateY(-4px);
-    box-shadow: var(--shadow-md);
-}
-
-.job-header {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 0.5rem;
-}
-
-.job-category {
-    background: var(--gray-200);
-    padding: 4px 10px;
-    border-radius: 6px;
-    font-size: 0.8rem;
-}
-
-.job-badge {
-    background: #ff3b30;
-    color: white;
-    padding: 4px 8px;
-    border-radius: 6px;
-    font-size: 0.75rem;
-}
-
-.job-title {
-    font-size: 1.2rem;
-    margin: 0.5rem 0;
-}
-
-.job-company {
-    color: var(--gray-700);
-    margin-bottom: 0.5rem;
-}
-
-.job-details {
-    font-size: 0.9rem;
-    margin-bottom: 1rem;
-}
-
-.job-footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.job-apply {
-    background: var(--primary);
-    color: white;
-    border: none;
-    padding: 8px 14px;
-    border-radius: 6px;
-    cursor: pointer;
-}
 /* ===== COMPACT FILTER SIDEBAR FIX ===== */
-/* ===== FILTER TYPOGRAPHY CLEAN ===== */
 
 .filters-sidebar h3 {
     font-family: var(--font-display);
@@ -2022,4 +1956,16 @@ font-size:1.05rem;
 .logout-btn:hover {
     background: #d92d20;
     transform: translateY(-2px);
+}
+
+/* Fix outline buttons inside job cards */
+
+.job-card .btn-outline {
+    color: var(--secondary);
+    border: 2px solid var(--secondary);
+}
+
+.job-card .btn-outline:hover {
+    background: var(--secondary);
+    color: var(--white);
 }

@@ -250,15 +250,21 @@ function applySidebarFilters() {
     // Payment Type mapping
     let paymentType = null;
 
-    if (document.getElementById('fulltime')?.checked) {
-        paymentType = 'Hourly';
+    if (document.getElementById('typeHourly')?.checked) {
+        paymentType = 'hourly';
     }
-    if (document.getElementById('parttime')?.checked) {
-        paymentType = 'Weekly';
+    if (document.getElementById('typeDaily')?.checked) {
+        paymentType = 'daily';
     }
-    if (document.getElementById('daily')?.checked) {
-        paymentType = 'Daily';
+    if (document.getElementById('typeWeekly')?.checked) {
+        paymentType = 'weekly';
     }
+    if (document.getElementById('typeFixed')?.checked) {
+        paymentType = 'fixed';
+    }
+
+    const urgent = document.getElementById('urgentOnly')?.checked ? true : null;
+    const ngoVerified = document.getElementById('ngoVerifiedOnly')?.checked ? true : null;
 
     // Salary mapping
     let minSalary = null;
@@ -283,7 +289,9 @@ function applySidebarFilters() {
         category,
         paymentType,
         minSalary,
-        maxSalary
+        maxSalary,
+        urgent,
+        ngoVerified
     });
 }
 document.addEventListener('DOMContentLoaded', () => {

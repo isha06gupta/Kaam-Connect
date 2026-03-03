@@ -11,7 +11,14 @@ import com.kaamconnect.backend.service.NgoService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.Map;
@@ -63,6 +70,16 @@ public class NgoController {
         return ResponseEntity.ok(new ApiResponse<>(true, "Training created", ngoService.createTraining(request, ngoId)));
     }
 
+    @GetMapping("/trainings")
+    public ResponseEntity<ApiResponse<List<TrainingProgram>>> trainings() {
+        return ResponseEntity.ok(new ApiResponse<>(true, "Trainings fetched", ngoService.getAllTrainings()));
+    }
+
+    @GetMapping("/dashboard-overview")
+    public ResponseEntity<ApiResponse<Map<String, Long>>> dashboardOverview() {
+        return ResponseEntity.ok(new ApiResponse<>(true, "Overview fetched", ngoService.getDashboardOverview()));
+    }
+
     @GetMapping("/overview")
     public ResponseEntity<ApiResponse<Map<String, Long>>> overview() {
         return ResponseEntity.ok(new ApiResponse<>(true, "Overview fetched", ngoService.getDashboardOverview()));
@@ -78,8 +95,8 @@ public class NgoController {
         Object principal = authentication.getPrincipal();
 
         try {
-            if (principal instanceof Long) {
-                return (Long) principal;
+            if (principal instanceof Long userId) {
+                return userId;
             }
             return Long.parseLong(principal.toString());
         } catch (NumberFormatException ex) {

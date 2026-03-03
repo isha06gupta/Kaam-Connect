@@ -1,7 +1,7 @@
 (function () {
     async function loadOverview() {
         const response = await Api.get('/api/ngo/dashboard-overview');
-        const data = response.data || {};
+        const data = response.data || response || {};
         document.getElementById('totalWorkers').textContent = data.totalWorkers || 0;
         document.getElementById('verifiedWorkers').textContent = data.verifiedWorkers || 0;
         document.getElementById('openDisputes').textContent = data.openDisputes || 0;
@@ -10,7 +10,7 @@
 
     async function loadWorkers() {
         const response = await Api.get('/api/ngo/workers');
-        const workers = response.data || [];
+        const workers = response.data || response || [];
         const rows = workers.map((w) => `
             <tr>
                 <td>${w.fullname || ''}</td>
@@ -34,7 +34,7 @@
 
     async function loadPendingPayments() {
         const response = await Api.get('/api/ngo/pending-payments');
-        const jobs = response.data || [];
+        const jobs = response.data || response || [];
         const rows = jobs.map((j) => `
             <tr>
                 <td>${j.title || ''}</td>
@@ -54,7 +54,7 @@
 
     async function loadDisputes() {
         const response = await Api.get('/api/ngo/disputes');
-        const disputes = response.data || [];
+        const disputes = response.data || response || [];
         const rows = disputes.map((d) => `
             <tr>
                 <td>${d.jobId}</td>
@@ -74,8 +74,8 @@
     }
 
     async function loadTrainings() {
-        const response = await Api.get('/api/trainings');
-        const trainings = response.data || [];
+        const response = await Api.get('/api/ngo/trainings');
+        const trainings = response.data || response || [];
         document.getElementById('trainingList').innerHTML = trainings.length
             ? trainings.map((t) => `<div class="job-card" style="margin-top:0.5rem;"><h4>${t.title}</h4><p>${t.description}</p></div>`).join('')
             : '<p>No training programs yet.</p>';
@@ -113,16 +113,27 @@
     }
 
     async function refreshAll() {
-        await Promise.all([loadOverview(), loadWorkers(), loadPendingPayments(), loadDisputes(), loadTrainings()]);
+        await Promise.all([
+            loadOverview(),
+            loadWorkers(),
+            loadPendingPayments(),
+            loadDisputes(),
+            loadTrainings()
+        ]);
     }
 
     window.verifyWorker = (id) => verifyWorker(id).catch((e) => showToast(e.message || 'Failed', 'error'));
     window.rejectWorker = (id) => rejectWorker(id).catch((e) => showToast(e.message || 'Failed', 'error'));
     window.resolveDispute = (id) => resolveDispute(id).catch((e) => showToast(e.message || 'Failed', 'error'));
 
-    document.addEventListener('DOMContentLoaded', () => {
-        if (!requireAuth('Please login to continue')) return;
-        refreshAll().catch((e) => showToast(e.message || 'Failed loading NGO dashboard', 'error'));
+    document.addEventListener('DOMContentLoaded', async () => {
+        if (typeof guardPage !== 'function') return;
+
+        const user = await guardPage('NGO');
+        if (!user) return;
+
+        await refreshAll().catch((e) => showToast(e.message || 'Failed loading NGO dashboard', 'error'));
+
         document.getElementById('trainingForm')?.addEventListener('submit', (e) => {
             createTraining(e).catch((err) => showToast(err.message || 'Failed creating training', 'error'));
         });
