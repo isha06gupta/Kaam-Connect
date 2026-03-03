@@ -1,5 +1,3 @@
-// Jobs page JavaScript (backend-integrated)
-
 let currentJobs = [];
 let toastScriptPromise = null;
 
@@ -77,13 +75,15 @@ function mapJob(job = {}) {
         title: job.title || 'Untitled Job',
         company: job.company || 'Unknown Company',
         location: job.location || 'Location not specified',
-        category: job.category || 'general',
+        category: job.category || 'General',
         type: job.paymentType || 'Not specified',
-        salary: job.paymentAmount || 'Not specified',
-        duration: job.duration || 'Not specified',
+        salary: job.paymentAmount ? `₹${job.paymentAmount}` : 'Not specified',
         badge: job.urgent ? 'URGENT' : null,
+        ngoVerified: !!job.ngoVerified,
         description: job.description || 'No description available.',
-        posted: 'Recently'
+        posted: 'Recently',
+        employerMarkedComplete: !!job.employerMarkedComplete,
+        workerConfirmedPayment: !!job.workerConfirmedPayment
     };
 }
 
@@ -117,6 +117,7 @@ function createJobCard(job, index) {
 
         <h3 class="job-title">${job.title}</h3>
         <p class="job-company">${job.company}</p>
+        ${job.ngoVerified ? '<span class="job-badge" style="margin-bottom:0.5rem;display:inline-block;">NGO Verified</span>' : ''}
 
         <div class="job-details">
             <div class="job-detail">📍 ${job.location}</div>
@@ -126,11 +127,14 @@ function createJobCard(job, index) {
 
         <p class="job-description">${job.description}</p>
 
-        <div class="job-footer">
+        <div class="job-footer" style="flex-direction:column;align-items:flex-start;gap:0.5rem;">
             <div class="job-salary">${job.salary}</div>
-            <button class="job-apply" onclick="applyJob(${job.id})">
-                Apply Now
-            </button>
+            <div style="display:flex;gap:0.5rem;flex-wrap:wrap;">
+                <button class="job-apply" onclick="applyJob(${job.id})">Apply Now</button>
+                <button class="btn-outline" onclick="raiseIssue(${job.id})">Raise Issue</button>
+                <button class="btn-outline" onclick="markComplete(${job.id})">Mark Complete</button>
+                <button class="btn-outline" onclick="confirmPayment(${job.id})">Confirm Payment</button>
+            </div>
         </div>
     `;
 
@@ -186,8 +190,6 @@ async function applyJob(jobId) {
 
     } catch (error) {
 
-        console.log('Apply Error:', error);
-
         const message =
             error?.payload?.message ||
             error?.message ||
@@ -197,9 +199,106 @@ async function applyJob(jobId) {
     }
 }
 
+async function markComplete(jobId) {
+    try {
+        await Api.put(`/api/jobs/mark-complete/${jobId}`, {});
+        await toastOrStatus('Job marked complete', 'success');
+        await fetchJobs();
+    } catch (error) {
+        await toastOrStatus(error?.message || 'Failed to mark complete', 'error');
+    }
+}
+
+async function confirmPayment(jobId) {
+    try {
+        await Api.put(`/api/jobs/confirm-payment/${jobId}`, {});
+        await toastOrStatus('Payment confirmed', 'success');
+        await fetchJobs();
+    } catch (error) {
+        await toastOrStatus(error?.message || 'Failed to confirm payment', 'error');
+    }
+}
+
+async function raiseIssue(jobId) {
+    const description = window.prompt('Describe the issue');
+    if (!description) {
+        return;
+    }
+
+    try {
+        await Api.post('/api/disputes/create', {
+            jobId,
+            raisedBy: 'WORKER',
+            description
+        });
+        await toastOrStatus('Issue raised successfully', 'success');
+    } catch (error) {
+        await toastOrStatus(error?.message || 'Failed to raise issue', 'error');
+    }
+}
+function applySidebarFilters() {
+
+    const keyword =
+        document.getElementById('searchKeyword')?.value?.trim() || '';
+
+    const location =
+        document.getElementById('searchLocation')?.value?.trim() || '';
+
+    const category =
+        document.getElementById('searchCategory')?.value || '';
+
+    // Payment Type mapping
+    let paymentType = null;
+
+    if (document.getElementById('fulltime')?.checked) {
+        paymentType = 'Hourly';
+    }
+    if (document.getElementById('parttime')?.checked) {
+        paymentType = 'Weekly';
+    }
+    if (document.getElementById('daily')?.checked) {
+        paymentType = 'Daily';
+    }
+
+    // Salary mapping
+    let minSalary = null;
+    let maxSalary = null;
+
+    if (document.getElementById('salary1')?.checked) {
+        maxSalary = 499;
+    }
+
+    if (document.getElementById('salary2')?.checked) {
+        minSalary = 500;
+        maxSalary = 1000;
+    }
+
+    if (document.getElementById('salary3')?.checked) {
+        minSalary = 1001;
+    }
+
+    fetchJobs({
+        keyword,
+        location,
+        category,
+        paymentType,
+        minSalary,
+        maxSalary
+    });
+}
 document.addEventListener('DOMContentLoaded', () => {
+
     fetchJobs();
+
+    document
+        .querySelectorAll('.filters-sidebar input[type="checkbox"]')
+        .forEach(cb => {
+            cb.addEventListener('change', applySidebarFilters);
+        });
 });
 
 window.searchJobs = searchJobs;
 window.applyJob = applyJob;
+window.markComplete = markComplete;
+window.confirmPayment = confirmPayment;
+window.raiseIssue = raiseIssue;

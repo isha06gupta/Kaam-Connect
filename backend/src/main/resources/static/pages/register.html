@@ -1,14 +1,12 @@
 <!-- backend/src/main/resources/static/pages/register.html -->
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register - KaamConnect</title>
 
     <link rel="stylesheet" href="../css/style.css">
-
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 
@@ -25,7 +23,7 @@
                     <span class="logo-text">KAAMCONNECT</span>
                 </a>
 
-                <h1>Create Account</h1>
+                <h1 id="registerHeading">Create Account</h1>
                 <p>Join thousands of workers and employers</p>
             </div>
 
@@ -49,7 +47,8 @@
                            placeholder="Create password" required>
                 </div>
 
-                <div class="form-group">
+                <!-- SKILL FIELD -->
+                <div class="form-group" id="skillField">
                     <label for="skill">Primary Skill</label>
                     <select id="skill" name="skill" required>
                         <option value="">Select Skill</option>
@@ -64,8 +63,9 @@
                     </select>
                 </div>
 
-                <div class="form-group">
-                    <label for="company">Company Name</label>
+                <!-- COMPANY / NGO FIELD -->
+                <div class="form-group" id="companyField">
+                    <label for="company" id="companyLabel">Company Name</label>
                     <input type="text" id="company" name="company"
                            placeholder="Company name">
                 </div>
@@ -79,6 +79,19 @@
                 <button type="submit" class="btn-primary btn-large btn-block">
                     Register
                 </button>
+                <div class="role-switch-links">
+
+    <p>Want to hire workers?</p>
+    <a class="role-btn" href="register.html?role=employer">
+        Register as Employer
+    </a>
+
+    <p>Are you an NGO partner?</p>
+    <a class="role-btn" href="register.html?role=ngo">
+        Register as NGO
+    </a>
+
+</div>
 
             </form>
 
@@ -95,7 +108,8 @@
 <script src="../js/toast.js"></script>
 <script src="../js/translations.js"></script>
 <script src="../js/auth.js"></script>
-<script src="../js/register.js"></script>
 
 </body>
 </html>
+
+

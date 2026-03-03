@@ -1609,6 +1609,27 @@ section {
     cursor: pointer;
 }
 
+.filter-option input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
+.filter-option {
+    padding: 6px 8px;
+    border-radius: 6px;
+    transition: background 0.2s ease;
+}
+
+.filter-option:hover {
+    background: #f3f4f6;
+}
+
+.filter-option label {
+    font-size: 0.95rem;
+    cursor: pointer;
+}
+
 /* Dashboard */
 .dashboard-container {
     max-width: 1400px;
@@ -1923,4 +1944,82 @@ padding:0;
 color:var(--gray-700);
 line-height:2;
 font-size:1.05rem;
+}
+
+@media (max-width: 900px) {
+
+    .register-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .register-image-section {
+        display: none;
+    }
+
+    .register-form-section {
+        padding: 2rem;
+    }
+}
+
+/* ===== REGISTER ROLE OPTIONS ===== */
+
+.role-switch-links {
+    margin-top: 2rem;
+    text-align: center;
+}
+
+.role-switch-links p {
+    font-size: 1.05rem;
+    font-weight: 500;
+    color: var(--secondary);
+    margin: 0.7rem 0;
+}
+
+.role-btn {
+    display: inline-block;
+    background: var(--primary);
+    color: var(--white);
+    padding: 10px 22px;
+    margin: 6px 0 12px;
+    border-radius: 6px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: 0.25s ease;
+}
+
+.role-btn:hover {
+    background: var(--primary-dark);
+    transform: translateY(-2px);
+}
+.forgot-link {
+    color: var(--primary);
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.forgot-link:hover {
+    text-decoration: underline;
+}
+/* ===== CLEAN LOGOUT BUTTON ===== */
+
+.nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.logout-btn {
+    background: #ff3b30;
+    color: white;
+    border: none;
+    padding: 8px 22px;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.25s ease;
+}
+
+.logout-btn:hover {
+    background: #d92d20;
+    transform: translateY(-2px);
 }

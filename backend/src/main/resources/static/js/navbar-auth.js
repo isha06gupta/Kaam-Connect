@@ -115,3 +115,22 @@
     document.addEventListener('DOMContentLoaded', initNavbarAuth);
 
 })();
+document.addEventListener("DOMContentLoaded", () => {
+
+    const logoutBtn = document.getElementById("logoutBtn");
+
+    if (logoutBtn) {
+        logoutBtn.addEventListener("click", () => {
+
+            // remove token
+            localStorage.removeItem("token");
+
+            // optional: clear everything
+            localStorage.clear();
+
+            // redirect to home
+            window.location.href = "/index.html";
+        });
+    }
+
+});

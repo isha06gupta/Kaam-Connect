@@ -33,17 +33,20 @@ public class JobService {
         this.jobApplicationRepository = jobApplicationRepository;
         this.userRepository = userRepository;
     }
+    public List<JobResponse> getPendingPayments() {
 
-    /* ---------------- ALL JOBS ---------------- */
-
+    return jobRepository
+            .findByEmployerMarkedCompleteTrueAndWorkerConfirmedPaymentFalseOrderByCreatedAtDesc()
+            .stream()
+            .map(this::toJobResponse)
+            .toList();
+}
     public List<JobResponse> getAllJobs() {
         return jobRepository.findAllByOrderByCreatedAtDesc()
                 .stream()
                 .map(this::toJobResponse)
                 .toList();
     }
-
-    /* ---------------- CREATE JOB ---------------- */
 
     public JobResponse createJob(Long userId, JobRequest dto) {
 
@@ -54,16 +57,17 @@ public class JobService {
         job.setLocation(dto.getLocation());
         job.setCategory(dto.getCategory());
         job.setPaymentAmount(dto.getPaymentAmount());
+        job.setPaymentType(dto.getPaymentType());
         job.setWorkersNeeded(dto.getWorkersNeeded());
         job.setUrgent(dto.getUrgent() != null && dto.getUrgent());
         job.setPostedByUserId(userId);
+        job.setEmployerMarkedComplete(Boolean.FALSE);
+        job.setWorkerConfirmedPayment(Boolean.FALSE);
 
         Job saved = jobRepository.save(job);
 
         return toJobResponse(saved);
     }
-
-    /* ---------------- APPLY JOB ---------------- */
 
     public void applyToJob(Long jobId, Long userId) {
 
@@ -81,8 +85,6 @@ public class JobService {
 
         jobApplicationRepository.save(application);
     }
-
-    /* ---------------- APPLIED JOBS ---------------- */
 
     public List<JobResponse> getAppliedJobs(Long userId) {
 
@@ -103,8 +105,6 @@ public class JobService {
                 .toList();
     }
 
-    /* ---------------- EMPLOYER JOBS ---------------- */
-
     public List<JobResponse> getJobsPostedByEmployer(Long userId) {
 
         return jobRepository
@@ -113,8 +113,6 @@ public class JobService {
                 .map(this::toJobResponse)
                 .toList();
     }
-
-    /* ---------------- APPLICATIONS ---------------- */
 
     public List<JobApplicationResponse> getApplicationsForJob(Long jobId) {
 
@@ -154,9 +152,103 @@ public class JobService {
         }).toList();
     }
 
-    /* ---------------- MAPPER ---------------- */
+    public JobResponse markJobComplete(Long jobId, Long employerId) {
+        Job job = jobRepository.findById(jobId)
+                .orElseThrow(() -> new ResourceNotFoundException("Job not found"));
+
+        if (!Objects.equals(job.getPostedByUserId(), employerId)) {
+            throw new BadRequestException("Only job owner can mark complete");
+        }
+
+        job.setEmployerMarkedComplete(Boolean.TRUE);
+        return toJobResponse(jobRepository.save(job));
+    }
+
+    public JobResponse confirmPayment(Long jobId) {
+        Job job = jobRepository.findById(jobId)
+                .orElseThrow(() -> new ResourceNotFoundException("Job not found"));
+
+        job.setWorkerConfirmedPayment(Boolean.TRUE);
+        return toJobResponse(jobRepository.save(job));
+    }
+
+    public List<JobResponse> getFilteredJobs(
+        String keyword,
+        String location,
+        String category,
+        String paymentType,
+        Integer minSalary,
+        Integer maxSalary,
+        Boolean urgent,
+        Boolean ngoVerified
+) {
+
+    List<Job> jobs = jobRepository.findAll();
+
+    return jobs.stream()
+            .filter(job -> {
+
+                boolean matches = true;
+
+                if (keyword != null && !keyword.isBlank()) {
+                    matches &= job.getTitle() != null &&
+                            job.getTitle().toLowerCase()
+                                    .contains(keyword.toLowerCase());
+                }
+
+                if (location != null && !location.isBlank()) {
+                    matches &= job.getLocation() != null &&
+                            job.getLocation().toLowerCase()
+                                    .contains(location.toLowerCase());
+                }
+
+                if (category != null && !category.isBlank()) {
+                    matches &= job.getCategory() != null &&
+                            job.getCategory().equalsIgnoreCase(category);
+                }
+
+                if (paymentType != null && !paymentType.isBlank()) {
+                    matches &= job.getPaymentType() != null &&
+                            job.getPaymentType().equalsIgnoreCase(paymentType);
+                }
+
+                if (minSalary != null) {
+                    matches &= job.getPaymentAmount() != null &&
+                            job.getPaymentAmount() >= minSalary;
+                }
+
+                if (maxSalary != null) {
+                    matches &= job.getPaymentAmount() != null &&
+                            job.getPaymentAmount() <= maxSalary;
+                }
+
+                if (urgent != null) {
+                    matches &= job.getUrgent() != null &&
+                            job.getUrgent().equals(urgent);
+                }
+
+                if (ngoVerified != null) {
+                    Boolean verified = userRepository
+                            .findById(job.getPostedByUserId())
+                            .map(User::getNgoVerified)
+                            .orElse(false);
+
+                    matches &= verified.equals(ngoVerified);
+                }
+
+                return matches;
+            })
+            .sorted(Comparator.comparing(Job::getCreatedAt).reversed())
+            .map(this::toJobResponse)
+            .toList();
+}
 
     private JobResponse toJobResponse(Job job) {
+
+        Boolean ngoVerified = userRepository.findById(job.getPostedByUserId())
+                .map(User::getNgoVerified)
+                .orElse(Boolean.FALSE);
+
         return new JobResponse(
                 job.getId(),
                 job.getTitle(),
@@ -164,10 +256,14 @@ public class JobService {
                 job.getLocation(),
                 job.getCategory(),
                 job.getPaymentAmount(),
+                job.getPaymentType(),
                 job.getWorkersNeeded(),
                 job.getUrgent(),
                 job.getPostedByUserId(),
-                job.getCreatedAt()
+                job.getCreatedAt(),
+                job.getEmployerMarkedComplete(),
+                job.getWorkerConfirmedPayment(),
+                ngoVerified
         );
     }
 }

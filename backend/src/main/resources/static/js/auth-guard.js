@@ -1,34 +1,37 @@
-(function () {
-    function isLoggedIn() {
-        return !!window.Api?.getToken?.();
+async function guardPage(requiredRole) {
+
+    const token = localStorage.getItem("token");
+
+    // not logged in
+    if (!token) {
+        window.location.href = "login.html";
+        return;
     }
 
-    function requireAuth(actionMessage = 'Please login to continue') {
-        if (isLoggedIn()) {
-            return true;
+    try {
+
+        const meRes = await Api.get("/api/users/me");
+        const user = meRes.data || meRes;
+
+        const role = (user.role || "").toUpperCase();
+
+        // ROLE CHECK
+        if (requiredRole && role !== requiredRole) {
+
+            // redirect based on real role
+            if (role === "EMPLOYER") {
+                window.location.href = "dashboard-employer.html";
+            }
+            else if (role === "NGO") {
+                window.location.href = "ngo-dashboard.html";
+            }
+            else {
+                window.location.href = "dashboard-worker.html";
+            }
         }
 
-        const message = actionMessage || 'Please login to continue';
-        sessionStorage.setItem('auth_guard_toast', message);
-
-        const pathname = window.location.pathname;
-        const loginPath = pathname.includes('/pages/') ? 'login.html' : 'pages/login.html';
-        window.location.href = loginPath;
-        return false;
+    } catch (e) {
+        localStorage.removeItem("token");
+        window.location.href = "login.html";
     }
-
-    function consumePendingAuthToast() {
-        const message = sessionStorage.getItem('auth_guard_toast');
-        if (!message) return;
-
-        sessionStorage.removeItem('auth_guard_toast');
-
-        if (typeof window.showToast === 'function') {
-            window.showToast(message, 'error');
-        }
-    }
-
-    window.isLoggedIn = isLoggedIn;
-    window.requireAuth = requireAuth;
-    window.consumePendingAuthToast = consumePendingAuthToast;
-})();
+}

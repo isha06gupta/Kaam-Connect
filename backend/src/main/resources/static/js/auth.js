@@ -60,8 +60,15 @@ function getValidationMessage(error) {
 --------------------------------*/
 
 function getRegisterRole() {
-    const role = new URLSearchParams(window.location.search).get('role');
-    return role === 'employer' ? 'employer' : 'worker';
+
+    const role =
+        new URLSearchParams(window.location.search)
+            .get('role');
+
+    if (role === 'employer') return 'employer';
+    if (role === 'ngo') return 'ngo';
+
+    return 'worker';
 }
 
 function setupRegisterRoleForm() {
@@ -79,30 +86,51 @@ function setupRegisterRoleForm() {
     const companyLabel = document.getElementById('companyLabel');
 
     const isEmployer = selectedRegisterRole === 'employer';
+    const isNgo = selectedRegisterRole === 'ngo';
+
+    /* ---------- Heading ---------- */
 
     if (heading) {
-        heading.textContent =
-            isEmployer ? 'Employer Registration' : 'Worker Registration';
+        if (isEmployer) heading.textContent = 'Employer Registration';
+        else if (isNgo) heading.textContent = 'NGO Registration';
+        else heading.textContent = 'Worker Registration';
     }
+
+    /* ---------- Skill Field ---------- */
 
     if (skillField && skillInput) {
-        skillField.style.display = isEmployer ? 'none' : '';
-        skillInput.required = !isEmployer;
-        if (isEmployer) skillInput.value = '';
+
+        if (isEmployer || isNgo) {
+            skillField.style.display = 'none';
+            skillInput.required = false;
+            skillInput.value = '';
+        } else {
+            skillField.style.display = '';
+            skillInput.required = true;
+        }
     }
 
+    /* ---------- Company Field ---------- */
+
     if (companyField && companyInput) {
-        companyField.style.display = isEmployer ? '' : 'none';
-        companyInput.required = isEmployer;
-        if (!isEmployer) companyInput.value = '';
+
+        if (isEmployer || isNgo) {
+            companyField.style.display = '';
+            companyInput.required = true;
+        } else {
+            companyField.style.display = 'none';
+            companyInput.required = false;
+            companyInput.value = '';
+        }
     }
 
     if (companyLabel) {
         companyLabel.textContent =
-            isEmployer ? 'Company Name' : 'Company Name (Optional)';
+            isEmployer ? 'Company Name'
+            : isNgo ? 'NGO Name'
+            : 'Company Name (Optional)';
     }
 }
-
 /* -------------------------------
    LOGIN HANDLER
 --------------------------------*/
@@ -137,18 +165,20 @@ async function handleLogin(event) {
         );
 
         // ===== ROLE BASED REDIRECT =====
-        const meRes = await Api.get('/api/users/me');
-        const user = meRes.data || meRes;
+const meRes = await Api.get('/api/users/me');
+const user = meRes.data || meRes;
 
-        const isEmployer =
-            user.company &&
-            user.company.toLowerCase() !== 'n/a';
+const role = (user.role || '').toString().toUpperCase();
 
-        window.location.href =
-            isEmployer
-                ? 'dashboard-employer.html'
-                : 'dashboard-worker.html';
-
+if (role === 'NGO') {
+    window.location.href = 'ngo-dashboard.html';
+}
+else if (role === 'EMPLOYER') {
+    window.location.href = 'dashboard-employer.html';
+}
+else {
+    window.location.href = 'dashboard-worker.html';
+}
     } catch (error) {
         showFormMessage(form,
             getValidationMessage(error),
@@ -182,7 +212,7 @@ async function handleRegister(event) {
         company: document.getElementById('company').value.trim() ||
                  (isEmployer ? '' : 'N/A'),
         location: document.getElementById('location').value.trim(),
-        role: isEmployer ? 'employer' : 'worker'   // ✅ CRITICAL FIX
+        role: selectedRegisterRole
     };
 
     if (isEmployer && !payload.company) {
@@ -216,3 +246,19 @@ async function handleRegister(event) {
 
     return false;
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    setupRegisterRoleForm();
+
+    const loginForm = document.getElementById("loginForm");
+    if (loginForm) {
+        loginForm.addEventListener("submit", handleLogin);
+    }
+
+    const registerForm = document.getElementById("registerForm");
+    if (registerForm) {
+        registerForm.addEventListener("submit", handleRegister);
+    }
+
+});

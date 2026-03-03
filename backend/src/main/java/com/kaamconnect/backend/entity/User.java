@@ -20,10 +20,19 @@ public class User {
     private String company;
     private String location;
 
+    private Boolean ngoVerified = Boolean.FALSE;
+
     @Enumerated(EnumType.STRING)
     private Role role = Role.USER;
 
     public User() {}
+
+    @PrePersist
+    public void onCreate() {
+        if (ngoVerified == null) {
+            ngoVerified = Boolean.FALSE;
+        }
+    }
 
     public Long getId() {
         return id;
@@ -75,6 +84,14 @@ public class User {
 
     public void setLocation(String location) {
         this.location = location;
+    }
+
+    public Boolean getNgoVerified() {
+        return ngoVerified;
+    }
+
+    public void setNgoVerified(Boolean ngoVerified) {
+        this.ngoVerified = ngoVerified;
     }
 
     public Role getRole() {

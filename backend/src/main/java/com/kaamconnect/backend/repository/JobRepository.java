@@ -9,4 +9,6 @@ public interface JobRepository extends JpaRepository<Job, Long> {
     List<Job> findAllByOrderByCreatedAtDesc();
     List<Job> findByPostedByUserIdOrderByCreatedAtDesc(Long postedByUserId);
     List<Job> findByIdInOrderByCreatedAtDesc(List<Long> ids);
+    List<Job> findByEmployerMarkedCompleteTrueAndWorkerConfirmedPaymentFalseOrderByCreatedAtDesc();
+    long countByEmployerMarkedCompleteTrueAndWorkerConfirmedPaymentFalse();
 }

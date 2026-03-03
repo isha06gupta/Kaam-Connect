@@ -6,6 +6,21 @@
         document.getElementById('fullname').value = user.fullname || '';
         document.getElementById('mobile').value = user.mobile || '';
         document.getElementById('location').value = user.location || '';
+
+        const existing = document.getElementById('ngoVerifiedBadge');
+        if (existing) {
+            existing.remove();
+        }
+
+        if (user.ngoVerified) {
+            const badge = document.createElement('div');
+            badge.id = 'ngoVerifiedBadge';
+            badge.className = 'job-badge';
+            badge.style.marginBottom = '1rem';
+            badge.textContent = 'NGO Verified';
+            const form = document.getElementById('profilePageForm');
+            form?.prepend(badge);
+        }
     }
 
     async function saveProfile(event) {

@@ -32,7 +32,7 @@ public class SecurityConfig {
                 )
 
                 .exceptionHandling(ex -> ex.authenticationEntryPoint(
-                        (req,res,e)->{
+                        (req, res, e) -> {
                             res.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
                             res.setContentType("application/json");
                             res.getWriter().write(
@@ -42,29 +42,26 @@ public class SecurityConfig {
                 ))
 
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(
-                                "/",
-                                "/index.html",
-                                "/pages/**",
-                                "/css/**",
-                                "/js/**",
-                                "/images/**"
-                        ).permitAll()
+        // static files
+        .requestMatchers(
+                "/",
+                "/index.html",
+                "/pages/**",
+                "/css/**",
+                "/js/**",
+                "/images/**",
+                "/favicon.ico"
+        ).permitAll()
 
-                        .requestMatchers("/api/auth/**").permitAll()
-                        .requestMatchers("/api/users/register").permitAll()
+        // public APIs
+        .requestMatchers("/api/auth/**").permitAll()
+        .requestMatchers("/api/users/register").permitAll()
 
-                        // Public job listing
-                        .requestMatchers(HttpMethod.GET,"/api/jobs").permitAll()
+        // protected APIs
+        .requestMatchers("/api/**").authenticated()
 
-                        // Require login
-                        .requestMatchers("/api/jobs/**").authenticated()
-                        .requestMatchers("/api/employer/**").authenticated()
-                        .requestMatchers("/api/users/me/**").authenticated()
-
-                        .anyRequest().authenticated()
-                )
-
+        .anyRequest().permitAll()
+)
                 .addFilterBefore(jwtAuthenticationFilter,
                         UsernamePasswordAuthenticationFilter.class);
 
@@ -72,7 +69,7 @@ public class SecurityConfig {
     }
 
     @Bean
-    public PasswordEncoder passwordEncoder(){
+    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 }
