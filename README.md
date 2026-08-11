@@ -7,7 +7,7 @@ An innovative web-based employment platform specifically designed for daily wage
 ### For Workers
 - **AI-Powered Job Matching**: Smart algorithms match workers with suitable jobs based on skills, location, and availability
 - **Voice-Based Profile Creation**: Create profiles using speech-to-text technology (no reading/writing required)
-- **Multilingual Support**: Available in English, Hindi, Bengali, Odiya,Telugu, Tamil, Marathi
+- **Multilingual Support**: Available in English, Hindi, Bengali,Odiya,Telugu, Tamil, Marathi
 - **NGO Verification**: Get verified by trusted NGO partners to increase employability
 - **Secure Payments**: Payment protection ensures workers get paid for completed work
 
